@@ -1,0 +1,78 @@
+<template>
+    <Transition name="modal">
+        <div v-if="show" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+            <div class="flex items-center justify-center min-h-screen p-4 w-full">
+                <div class="bg-secondary rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                    <div class="p-8">
+                        <!-- Modal Header -->
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-background">{{ project?.caseStudy?.title || 'Case Study Details' }}</h2>
+                            <button class="text-gray-400 hover:text-background transition-colors" @click="close">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Modal Content -->
+                        <div v-if="project?.caseStudy" v-html="project.caseStudy.content"></div>
+                        <div v-else class="text-center py-8">
+                            <p class="text-gray-400">Case study details not available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Transition>
+</template>
+
+<script setup>
+import { watch } from 'vue';
+
+const props = defineProps({
+    project: {
+        type: Object,
+        default: null
+    },
+    show: {
+        type: Boolean,
+        default: false
+    }
+});
+
+const emit = defineEmits(['close']);
+
+function close() {
+    emit('close');
+}
+
+// When modal is shown, prevent body scroll
+watch(() => props.show, (value) => {
+    if (value) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+});
+</script>
+
+<style scoped>
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .bg-secondary {
+  transition: transform 0.3s ease;
+}
+
+.modal-enter-from .bg-secondary,
+.modal-leave-to .bg-secondary {
+  transform: scale(0.95);
+}
+</style>

@@ -1,0 +1,125 @@
+/* Tailwind v4 is imported in app.css; keep only project-specific layers/utilities here. */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #0a0a0a; /* gray-950 */
+  --color-secondary: #1a1a1a; /* gray-900 */
+  --color-accent: #00d4ff; /* cyan-400 */
+
+  /* Background Colors */
+  --color-background: #ffffff; /* white */
+  --color-surface: #f8fafc; /* slate-50 */
+
+  /* Text Colors */
+  --color-text-primary: #0f172a; /* slate-900 */
+  --color-text-secondary: #64748b; /* slate-500 */
+
+  /* Status Colors */
+  --color-success: #10b981; /* emerald-500 */
+  --color-warning: #f59e0b; /* amber-500 */
+  --color-error: #ef4444; /* red-500 */
+
+  /* Border Colors */
+  --color-border: #e2e8f0; /* slate-200 */
+
+  /* Shadow Values */
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-button: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-hero: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* Animation Durations */
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-stagger: 100ms;
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+  }
+
+  body {
+    @apply bg-background text-text-primary antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-inter font-semibold;
+  }
+
+  p {
+    @apply font-inter font-normal;
+  }
+}
+
+@layer components {
+
+  .btn-primary {
+    @apply bg-accent text-primary font-semibold px-6 py-3 rounded-lg transition-all duration-normal hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent focus:[&_.ring]:opacity-50;
+  }
+
+
+  .btn-secondary {
+    @apply bg-surface text-text-primary border border-border font-semibold px-6 py-3 rounded-lg transition-all duration-normal hover:bg-secondary hover:text-background focus:outline-none focus:ring-2 focus:ring-accent focus:[&_.ring]:opacity-50;
+  }
+
+  .card {
+    @apply bg-surface rounded-xl p-6 shadow-card transition-all duration-normal hover:shadow-lg;
+  }
+
+  .hero-card {
+    @apply bg-surface rounded-xl p-8 shadow-hero transition-all duration-normal;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-border rounded-lg bg-background text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-fast;
+  }
+
+  .code-block {
+    @apply font-mono bg-secondary text-accent p-4 rounded-lg overflow-x-auto;
+  }
+
+  .section-padding {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-max {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .fade-in {
+    @apply opacity-0 translate-y-4 transition-all duration-normal;
+  }
+
+  .fade-in.visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .stagger-delay-1 {
+    transition-delay: var(--duration-stagger);
+  }
+
+  .stagger-delay-2 {
+    transition-delay: calc(var(--duration-stagger) * 2);
+  }
+
+  .stagger-delay-3 {
+    transition-delay: calc(var(--duration-stagger) * 3);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent to-success bg-clip-text text-transparent;
+  }
+  .border-gradient {
+    background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+                linear-gradient(135deg, var(--color-accent), var(--color-success)) border-box;
+    border: 1px solid transparent;
+  }
+  .hover-lift {
+    @apply transition-transform duration-normal hover:-translate-y-1;
+  }
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+}
