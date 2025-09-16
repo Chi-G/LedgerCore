@@ -50,7 +50,7 @@
                 <p
                     class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto"
                 >
-                    Digital transformation built for Nigerian business success
+                    Digital transformation built for your business success
                 </p>
             </div>
 

@@ -168,7 +168,7 @@ This project is proprietary software owned by Forahia Digital Innovation. All ri
 ## 📱 Contact
 
 - **Website**: [forahia.org.ng](https://forahia.org.ng)
-- **Email**: contact@forahia.com
+- **Email**: contact@forahia.org.ng
 - **Phone**: +234 (0) 706 591 0449
 - **Address**: Independence Avenue Central Business District, Abuja, Nigeria
 

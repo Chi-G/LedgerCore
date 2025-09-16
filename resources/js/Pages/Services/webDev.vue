@@ -155,7 +155,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                 <div class="card bg-gray-900/50 backdrop-blur-sm border border-gray-700">
                     <h4 class="text-lg font-semibold text-background mb-4">Starter Package</h4>
-                    <div class="text-3xl font-bold text-accent mb-2">$3.5K - $7K</div>
+                    <div class="text-3xl font-bold text-accent mb-2">$1.5K - $3.5K</div>
                     <p class="text-gray-400 mb-4">Perfect for SMEs and startups</p>
                     <ul class="space-y-2 text-sm text-gray-300">
                         <li>• Responsive web application</li>
@@ -169,7 +169,7 @@
                         Most Popular
                     </div>
                     <h4 class="text-lg font-semibold text-background mb-4">Professional Package</h4>
-                    <div class="text-3xl font-bold text-accent mb-2">$10K - $15K</div>
+                    <div class="text-3xl font-bold text-accent mb-2">$4K - $7K</div>
                     <p class="text-gray-400 mb-4">Ideal for growing businesses</p>
                     <ul class="space-y-2 text-sm text-gray-300">
                         <li>• Custom web application</li>
@@ -180,7 +180,7 @@
                 </div>
                 <div class="card bg-gray-900/50 backdrop-blur-sm border border-gray-700">
                     <h4 class="text-lg font-semibold text-background mb-4">Enterprise Package</h4>
-                    <div class="text-3xl font-bold text-accent mb-2">$20K+</div>
+                    <div class="text-3xl font-bold text-accent mb-2">$10K+</div>
                     <p class="text-gray-400 mb-4">For large-scale operations</p>
                     <ul class="space-y-2 text-sm text-gray-300">
                         <li>• Complex web platform</li>
@@ -223,7 +223,7 @@
                             "Forahia transformed our e-commerce platform, increasing our online sales by 280% within 6 months. Their understanding of market dynamics and technical expertise is exceptional."
                         </p>
                         <div>
-                            <div class="font-semibold text-background">Alex Johnson</div>
+                            <div class="font-semibold text-background">Miriam Johnson</div>
                             <div class="text-sm text-gray-400">CEO, Global Fashion Hub</div>
                         </div>
                     </div>
@@ -307,7 +307,6 @@ onUnmounted(() => {
     document.removeEventListener('contextmenu', handleContextMenu);
     document.removeEventListener('keydown', handleKeyDown);
     document.removeEventListener('dragstart', handleDragStart);
-    document.removeEventListener('copy');
 });
 </script>
 
@@ -316,20 +315,20 @@ onUnmounted(() => {
 .protected-image-container {
   position: relative;
   pointer-events: auto; /* Allow interactions with the container */
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   overflow: hidden;
 }
 
-/* All direct children of the container should be non-interactive */
-.protected-image-container > * {
+/* Only images inside the container should be non-interactive */
+.protected-image-container img {
   pointer-events: none;
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Apply CSS protection pattern over the image */

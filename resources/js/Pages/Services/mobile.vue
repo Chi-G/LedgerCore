@@ -173,7 +173,7 @@
                          style="user-select: none; position: relative;">
                         <!-- Overlaid watermark that prevents easy downloading -->
                         <div class="absolute inset-0 flex items-center justify-center z-20 opacity-30 pointer-events-none select-none">
-                            <span class="text-xs font-bold text-white rotate-45 transform scale-75">FORAHIA</span>
+                            <span class="text-xs font-bold text-white rotate-45 transform scale-75"></span>
                         </div>
                         <!-- Main image with CSS protection -->
                         <div class="w-full h-full bg-cover bg-center protected-image"

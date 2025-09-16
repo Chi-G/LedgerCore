@@ -1,6 +1,29 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { InertiaProgress } from '@inertiajs/progress'
+import 'notyf/notyf.min.css'
+import { registerServiceWorker } from './utils/serviceWorker'
+
+// Register service worker for PWA support and offline capabilities
+registerServiceWorker()
+
+// Performance optimization - preload critical routes
+if ('connection' in navigator) {
+  if (navigator.connection.saveData === false) {
+    // Only preload if user is not on data-saving mode
+    const preloadRoutes = ['/about', '/services', '/portfolio', '/contact', '/client']
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        preloadRoutes.forEach(route => {
+          const link = document.createElement('link')
+          link.rel = 'prefetch'
+          link.href = route
+          document.head.appendChild(link)
+        })
+      })
+    }
+  }
+}
 
 createInertiaApp({
   resolve: name => {
@@ -35,5 +58,5 @@ document.addEventListener('inertia:error', (event) => {
 
 InertiaProgress.init({
   color: '#00d4ff',
-  showSpinner: false
+  showSpinner: true
 })

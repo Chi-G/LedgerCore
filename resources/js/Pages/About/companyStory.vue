@@ -31,28 +31,28 @@
 
                     <!-- Key Milestones -->
                     <div class="space-y-4">
-                        <div class="flex items-center space-x-4">
+                        <div class="flex items-center">
                             <div class="w-3 h-3 bg-accent rounded-full"></div>
-                            <span class="text-gray-300"><strong class="text-accent">2019:</strong> Founded with 3 passionate developers</span>
+                            <span class="text-gray-300 ml-4"><strong class="text-accent">2019:</strong> Founded with 3 passionate developers</span>
                         </div>
-                        <div class="flex items-center space-x-4">
+                        <div class="flex items-center">
                             <div class="w-3 h-3 bg-green-400 rounded-full"></div>
-                            <span class="text-gray-300"><strong class="text-green-400">2021:</strong> Expanded to 15+ team members across multiple regions</span>
+                            <span class="text-gray-300 ml-4"><strong class="text-green-400">2021:</strong> Expanded to 15+ team members across multiple regions</span>
                         </div>
-                        <div class="flex items-center space-x-4">
+                        <div class="flex items-center">
                             <div class="w-3 h-3 bg-purple-400 rounded-full"></div>
-                            <span class="text-gray-300"><strong class="text-purple-400">2023:</strong> Launched Out Innovations for projects</span>
+                            <span class="text-gray-300 ml-4"><strong class="text-purple-400">2023:</strong> Launched Out Innovations for projects</span>
                         </div>
-                        <div class="flex items-center space-x-4">
+                        <div class="flex items-center">
                             <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                            <span class="text-gray-300"><strong class="text-yellow-400">2025:</strong> 150+ successful transformations completed</span>
+                            <span class="text-gray-300 ml-4"><strong class="text-yellow-400">2025:</strong> 150+ successful transformations completed</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="relative">
-                    <div class="hero-card bg-gray-900/50 backdrop-blur-sm border border-gray-700">
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Forahia team collaboration" class="w-full h-64 object-cover rounded-lg mb-6" loading="lazy" onerror="this.src='https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                    <div class="hero-card protected-image-container bg-gray-900/50 backdrop-blur-sm border border-gray-700">
+                        <img src="/ourMission.avif" alt="Forahia team collaboration" class="w-full h-64 object-cover rounded-lg mb-6" loading="lazy" />
 
                         <div class="text-center">
                             <h3 class="text-xl font-semibold text-background mb-4">Our Mission</h3>
@@ -66,3 +66,115 @@
         </div>
     </section>
 </template>
+
+<script setup>
+import { onMounted, onUnmounted, ref } from 'vue';
+
+// Toast notification variables
+const showToast = ref(false);
+const toastMessage = ref('');
+
+// Function to prevent right-click on protected images
+const handleContextMenu = (e) => {
+    if (e.target.closest('.protected-image-container')) {
+        e.preventDefault();
+        showProtectionToast('Image is protected'); 
+        return false;
+    }
+};
+
+// Function to prevent keyboard shortcuts for saving images
+const handleKeyDown = (e) => {
+    // Prevent Ctrl+S, Ctrl+U, F12, etc.
+    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.key === 'u' || e.key === 'U')) {
+        e.preventDefault();
+        showProtectionToast('Keyboard shortcut blocked');
+        return false;
+    }
+};
+
+// Function to prevent drag operations on protected images
+const handleDragStart = (e) => {
+    if (e.target.closest('.protected-image-container')) {
+        e.preventDefault();
+        return false;
+    }
+};
+
+// Function to show toast notification
+const showProtectionToast = (message) => {
+    toastMessage.value = message;
+    showToast.value = true;
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+        showToast.value = false;
+    }, 3000);
+};
+
+onMounted(() => {
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dragstart', handleDragStart);
+
+    // Also prevent copy events
+    document.addEventListener('copy', (e) => {
+        if (e.target.closest('.protected-image-container')) {
+            e.preventDefault();
+            showProtectionToast('Copy operation blocked');
+            return false;
+        }
+    });
+});
+
+onUnmounted(() => {
+    document.removeEventListener('contextmenu', handleContextMenu);
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('dragstart', handleDragStart);
+});
+
+</script>
+
+<style>
+/* Protected image container - handles all the protections */
+.protected-image-container {
+  position: relative;
+  pointer-events: auto; /* Allow interactions with the container */
+  overflow: hidden;
+}
+
+/* Only images inside the container should be non-interactive */
+.protected-image-container img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Apply CSS protection pattern over the image */
+.protected-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.02) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0.02) 75%,
+    transparent 75%
+  );
+  background-size: 4px 4px;
+  pointer-events: none;
+  z-index: 5;
+}
+</style>

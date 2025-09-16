@@ -1,2 +1,20 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /login
+Disallow: /logout
+Disallow: /register
+Disallow: /password/
+Disallow: /email/
+
+# Allow assets
+Allow: /build/
+Allow: /assets/
+Allow: /images/
+
+# Sitemaps
+Sitemap: https://forahia.org.ng/sitemap.xml
+Sitemap: https://forahia.org.ng/sitemap-blog.xml

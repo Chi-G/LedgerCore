@@ -17,7 +17,7 @@
                 </span>
             </h2>
             <p class="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
-                Join our satisfied clients in becoming Forahia advocates. Earn rewards for successful referrals while helping other Nigerian businesses transform digitally.
+                Join our satisfied clients in becoming Forahia advocates. Earn rewards for successful referrals while helping businesses worldwide transform digitally.
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -29,7 +29,7 @@
                     </div>
                     <h3 class="text-xl font-semibold text-background mb-4">Refer a Business</h3>
                     <p class="text-gray-400 mb-4">Connect us with businesses that could benefit from digital transformation.</p>
-                    <div class="text-2xl font-bold text-accent">₦500K</div>
+                    <div class="text-2xl font-bold text-accent">$100</div>
                     <div class="text-gray-400 text-sm">Referral Bonus</div>
                 </div>
 
@@ -41,7 +41,7 @@
                     </div>
                     <h3 class="text-xl font-semibold text-background mb-4">Project Success</h3>
                     <p class="text-gray-400 mb-4">Earn additional rewards when referred projects are successfully completed.</p>
-                    <div class="text-2xl font-bold text-success">₦1M</div>
+                    <div class="text-2xl font-bold text-success">$150</div>
                     <div class="text-gray-400 text-sm">Success Bonus</div>
                 </div>
 
@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <a href="contact_consultation.html" class="btn-primary text-lg px-8 py-4 hover-lift">
+            <a href="/contact" class="btn-primary text-lg px-8 py-4 hover-lift">
                 Join Referral Program
             </a>
         </div>

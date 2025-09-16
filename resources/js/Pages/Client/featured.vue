@@ -27,8 +27,8 @@
                 <!-- Video Testimonial 1 -->
                 <div class="group relative">
                     <div class="card bg-gray-900/50 backdrop-blur-sm border border-gray-700 hover:border-accent transition-all duration-300 hover-lift">
-                        <div class="relative mb-6">
-                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2426&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="CEO Adebayo Ogundimu video testimonial" class="w-full h-48 object-cover rounded-lg" loading="lazy" onerror="this.src='https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                        <div class="relative mb-6 protected-image-container">
+                            <img src="/adebayo.avif" alt="CEO Adebayo Ogundimu video testimonial" class="w-full h-48 object-cover rounded-lg" loading="lazy"/>
                             <div class="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center group-hover:bg-black/30 transition-colors">
                                 <button class="w-16 h-16 bg-accent/90 rounded-full flex items-center justify-center hover:bg-accent transition-colors">
                                     <svg class="w-6 h-6 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -39,7 +39,7 @@
                         </div>
                         <div class="space-y-4">
                             <div class="flex items-center space-x-4">
-                                <img src="/black.jpg" alt="Adebayo Ogundimu" class="w-12 h-12 rounded-full object-cover" loading="lazy" onerror="this.src='https://images.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg'; this.onerror=null;" />
+                                <img src="/black.jpg" alt="Adebayo Ogundimu" class="w-12 h-12 rounded-full object-cover" loading="lazy"/>
                                 <div>
                                     <h3 class="text-lg font-semibold text-background">Adebayo Ogundimu</h3>
                                     <p class="text-gray-400">CEO, TechHub Global</p>
@@ -60,8 +60,8 @@
                 <!-- Video Testimonial 2 -->
                 <div class="group relative">
                     <div class="card bg-gray-900/50 backdrop-blur-sm border border-gray-700 hover:border-success transition-all duration-300 hover-lift">
-                        <div class="relative mb-6">
-                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="CEO Kemi Adebisi video testimonial" class="w-full h-48 object-cover rounded-lg" loading="lazy" onerror="this.src='https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                        <div class="relative mb-6 protected-image-container">
+                            <img src="/alex_adebisi.avif" alt="CEO Alex Adebisi video testimonial" class="w-full h-48 object-cover rounded-lg" loading="lazy"/>
                             <div class="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center group-hover:bg-black/30 transition-colors">
                                 <button class="w-16 h-16 bg-success/90 rounded-full flex items-center justify-center hover:bg-success transition-colors">
                                     <svg class="w-6 h-6 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -72,9 +72,9 @@
                         </div>
                         <div class="space-y-4">
                             <div class="flex items-center space-x-4">
-                                <img src="/black2.jpg" alt="Kemi Adebisi" class="w-12 h-12 rounded-full object-cover" loading="lazy" />
+                                <img src="/black2.jpg" alt="Kemi Adebisi" class="w-12 h-12 rounded-full object-cover" loading="lazy"/>
                                 <div>
-                                    <h3 class="text-lg font-semibold text-background">Kemi Adebisi</h3>
+                                    <h3 class="text-lg font-semibold text-background">Alex Adebisi</h3>
                                     <p class="text-gray-400">Founder, Global Fashion House</p>
                                 </div>
                             </div>
@@ -100,3 +100,115 @@
         </div>
     </section>
 </template>
+
+<script setup>
+import { onMounted, onUnmounted, ref } from 'vue';
+
+// Toast notification variables
+const showToast = ref(false);
+const toastMessage = ref('');
+
+// Function to prevent right-click on protected images
+const handleContextMenu = (e) => {
+    if (e.target.closest('.protected-image-container')) {
+        e.preventDefault();
+        showProtectionToast('Image is protected');
+        return false;
+    } 
+};
+
+// Function to prevent keyboard shortcuts for saving images
+const handleKeyDown = (e) => {
+    // Prevent Ctrl+S, Ctrl+U, F12, etc.
+    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.key === 'u' || e.key === 'U')) {
+        e.preventDefault();
+        showProtectionToast('Keyboard shortcut blocked');
+        return false;
+    }
+};
+
+// Function to prevent drag operations on protected images
+const handleDragStart = (e) => {
+    if (e.target.closest('.protected-image-container')) {
+        e.preventDefault();
+        return false;
+    }
+};
+
+// Function to show toast notification
+const showProtectionToast = (message) => {
+    toastMessage.value = message;
+    showToast.value = true;
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+        showToast.value = false;
+    }, 3000);
+};
+
+onMounted(() => {
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dragstart', handleDragStart);
+
+    // Also prevent copy events
+    document.addEventListener('copy', (e) => {
+        if (e.target.closest('.protected-image-container')) {
+            e.preventDefault();
+            showProtectionToast('Copy operation blocked');
+            return false;
+        }
+    });
+});
+
+onUnmounted(() => {
+    document.removeEventListener('contextmenu', handleContextMenu);
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('dragstart', handleDragStart);
+});
+
+</script>
+
+<style>
+/* Protected image container - handles all the protections */
+.protected-image-container {
+  position: relative;
+  pointer-events: auto; /* Allow interactions with the container */
+  overflow: hidden;
+}
+
+/* Only images inside the container should be non-interactive */
+.protected-image-container img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Apply CSS protection pattern over the image */
+.protected-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.02) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0.02) 75%,
+    transparent 75%
+  );
+  background-size: 4px 4px;
+  pointer-events: none;
+  z-index: 5;
+}
+</style>

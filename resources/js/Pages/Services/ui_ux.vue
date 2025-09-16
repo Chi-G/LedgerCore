@@ -196,12 +196,12 @@
                     <div class="protected-image-container relative w-16 h-16 rounded-full overflow-hidden">
                         <!-- Main image with proper styling -->
                         <div class="w-full h-full bg-cover bg-center"
-                             style="background-image: url('michael_reynolds.jpg');">
+                             style="background-image: url('michael_ndubuisi.jpg');">
                         </div>
 
                         <!-- Permanent subtle watermark -->
                         <div class="absolute inset-0 flex items-center justify-center z-10 opacity-20">
-                            <span class="text-[10px] font-bold text-white rotate-45 transform select-none">FORAHIA</span>
+                            <span class="text-[10px] font-bold text-white rotate-45 transform select-none"></span>
                         </div>
 
                         <!-- Interactive hover effect with enhanced watermark -->
@@ -222,7 +222,7 @@
                             "Forahia's design team increased our user engagement by 150% and reduced support tickets by 60%. Their understanding of diverse user preferences and cultural nuances is remarkable."
                         </p>
                         <div>
-                            <div class="font-semibold text-background">Michael Reynolds</div>
+                            <div class="font-semibold text-background">Michael Ndubuisi</div>
                             <div class="text-sm text-gray-400">Product Manager, GlobalEdu Technologies</div>
                         </div>
                     </div>
@@ -278,7 +278,6 @@ onUnmounted(() => {
     document.removeEventListener('contextmenu', handleContextMenu);
     document.removeEventListener('keydown', handleKeyDown);
     document.removeEventListener('dragstart', handleDragStart);
-    document.removeEventListener('copy');
 });
 </script>
 
@@ -287,20 +286,20 @@ onUnmounted(() => {
 .protected-image-container {
   position: relative;
   pointer-events: auto; /* Allow interactions with the container */
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   overflow: hidden;
 }
 
-/* All direct children of the container should be non-interactive */
-.protected-image-container > * {
+/* Only images inside the container should be non-interactive */
+.protected-image-container img {
   pointer-events: none;
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Apply CSS protection pattern over the image */

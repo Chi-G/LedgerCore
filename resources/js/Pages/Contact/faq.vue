@@ -68,8 +68,8 @@ const faqs = [
         answer: 'We\'ll discuss your business objectives, current challenges, and technical requirements. You\'ll receive a preliminary project roadmap, technology recommendations, and estimated timeline and budget ranges. No commitment required.'
     },
     {
-        question: 'Do you work with companies outside Abuja?',
-        answer: 'Absolutely! We serve clients across Nigeria and internationally. We offer remote collaboration tools, video consultations, and can arrange travel for project kickoffs and key milestones when needed.'
+        question: 'Do you work with companies worldwide?',
+        answer: 'Absolutely! We serve clients globally. We offer remote collaboration tools, video consultations, and can arrange travel for project kickoffs and key milestones when needed.'
     },
     {
         question: 'What information should I prepare before contacting you?',

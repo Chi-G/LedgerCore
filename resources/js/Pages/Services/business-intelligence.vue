@@ -279,7 +279,6 @@ onUnmounted(() => {
     document.removeEventListener('contextmenu', handleContextMenu);
     document.removeEventListener('keydown', handleKeyDown);
     document.removeEventListener('dragstart', handleDragStart);
-    document.removeEventListener('copy');
 });
 </script>
 
@@ -288,20 +287,20 @@ onUnmounted(() => {
 .protected-image-container {
   position: relative;
   pointer-events: auto; /* Allow interactions with the container */
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   overflow: hidden;
 }
 
-/* All direct children of the container should be non-interactive */
-.protected-image-container > * {
+/* Only images inside the container should be non-interactive */
+.protected-image-container img {
   pointer-events: none;
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Apply CSS protection pattern over the image */

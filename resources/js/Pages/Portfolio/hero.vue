@@ -47,11 +47,11 @@
             </div>
 
             <!-- Live Metrics Counter -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-                <div class="text-center">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
+                <!-- <div class="text-center">
                     <div class="text-3xl md:text-4xl font-bold text-accent mb-2">$2.5B+</div>
                     <div class="text-gray-400">Revenue Generated</div>
-                </div>
+                </div> -->
                 <div class="text-center">
                     <div class="text-3xl md:text-4xl font-bold text-green-400 mb-2">300+</div>
                     <div class="text-gray-400">Projects Delivered</div>

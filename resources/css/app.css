@@ -1,6 +1,10 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+/* Import critical CSS first for fastest rendering */
+@import './critical.css';
+
+/* Load fonts with preconnect for faster loading */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap&display=swap');
 @import 'tailwindcss';
 
 /* Define Tailwind v4 tokens BEFORE importing files that use them */
@@ -40,6 +44,7 @@
 /* Custom project styles (order matters: general legacy, then specific main) */
 @import './main.css';
 @import './legacy.css';
+@import './scroll-fix.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

@@ -51,7 +51,7 @@
 
                 <div class="relative">
                     <div class="hero-card bg-gray-900/50 backdrop-blur-sm border border-gray-700">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="E-commerce platform dashboard" class="w-full h-64 object-cover rounded-lg mb-6" loading="lazy" onerror="this.src='https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                        <img src="/home.avif" alt="E-commerce platform dashboard" class="w-full h-64 object-cover rounded-lg mb-6" loading="lazy" />
 
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">

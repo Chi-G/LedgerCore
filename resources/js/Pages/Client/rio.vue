@@ -168,8 +168,14 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import { Notyf } from 'notyf'
 
 const showResults = ref(false)
+
+const notyf = new Notyf({
+    duration: 3000,
+    position: { x: 'right', y: 'top' }
+})
 
 const formData = reactive({
     businessType: '',
@@ -191,7 +197,7 @@ const roiData = reactive({
 const calculateROI = () => {
     // Validate form
     if (!formData.businessType || !formData.companySize || !formData.monthlyRevenue || !formData.projectType || !formData.timeline) {
-        alert('Please fill in all fields to calculate ROI')
+        notyf.error('Please fill in all fields to calculate ROI')
         return
     }
 

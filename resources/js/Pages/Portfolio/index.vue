@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, provide, onMounted } from "vue";
+import { ref, reactive, computed, provide, onMounted, onUnmounted } from "vue";
 import MainLayout from "../../Components/Layout/MainLayout.vue";
 import Hero from "./hero.vue";
 import FilterSection from "./filter.vue";
@@ -88,7 +88,7 @@ const portfolioProjects = reactive([
         caseStudy: {
             title: 'Norte Investments',
             content: `
-                <div class="space-y-6">
+                <div class="space-y-6 protected-image-container">
                     <img src="${norteImage}"
                             alt="Norte Investments" class="w-full h-64 object-cover rounded-lg">
 
@@ -167,7 +167,7 @@ const portfolioProjects = reactive([
         caseStudy: {
             title: 'Ally HealthCare Platform',
             content: `
-                <div class="space-y-6">
+                <div class="space-y-6 protected-image-container">
                     <img src="${allyhealthcareImage}"
                             alt="Ally HealthCare Platform" class="w-full h-64 object-cover rounded-lg">
 
@@ -216,7 +216,7 @@ const portfolioProjects = reactive([
         caseStudy: {
             title: 'BAS Technologies',
             content: `
-                <div class="space-y-6">
+                <div class="space-y-6 protected-image-container">
                     <img src="${allycarewebsiteImage}"
                             alt="BAS Technologies" class="w-full h-64 object-cover rounded-lg">
 
@@ -265,7 +265,7 @@ const portfolioProjects = reactive([
         caseStudy: {
             title: 'MMR Style Solutions',
             content: `
-                <div class="space-y-6">
+                <div class="space-y-6 protected-image-container">
                     <img src="${mmrstylesolutionsImage}"
                             alt="MMR Style Solutions" class="w-full h-64 object-cover rounded-lg">
 
@@ -314,7 +314,7 @@ const portfolioProjects = reactive([
         caseStudy: {
             title: 'MBZ Technology',
             content: `
-                <div class="space-y-6">
+                <div class="space-y-6 protected-image-container">
                     <img src="${mbzTechImage}"
                             alt="MBZ Technology Website" class="w-full h-64 object-cover rounded-lg">
 
@@ -363,7 +363,7 @@ const portfolioProjects = reactive([
         caseStudy: {
             title: 'STRONG MAS NIGERIA',
             content: `
-                <div class="space-y-6">
+                <div class="space-y-6 protected-image-container">
                     <img src="${strongmasImage}"
                             alt="STRONG MAS NIGERIA" class="w-full h-64 object-cover rounded-lg">
 
@@ -397,12 +397,75 @@ const portfolioProjects = reactive([
     }
 ]);
 
+// Function to prevent right-click on protected images
+const handleContextMenu = (e) => {
+    if (e.target.closest('.protected-image-container')) {
+        e.preventDefault();
+        showProtectionToast('Image is protected');
+        return false;
+    }
+};
+
+// Function to prevent keyboard shortcuts for saving images
+const handleKeyDown = (e) => {
+    // Prevent Ctrl+S, Ctrl+U, F12, etc.
+    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.key === 'u' || e.key === 'U')) {
+        e.preventDefault();
+        showProtectionToast('Keyboard shortcut blocked');
+        return false;
+    }
+};
+
+// Function to prevent drag operations on protected images
+const handleDragStart = (e) => {
+    if (e.target.closest('.protected-image-container')) {
+        e.preventDefault();
+        return false;
+    }
+};
+
+// Function to show toast notification
+const showProtectionToast = (message) => {
+    toastMessage.value = message;
+    showToast.value = true;
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+        showToast.value = false;
+    }, 3000);
+};
+
+onMounted(() => {
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dragstart', handleDragStart);
+
+    // Also prevent copy events
+    document.addEventListener('copy', (e) => {
+        if (e.target.closest('.protected-image-container')) {
+            e.preventDefault();
+            showProtectionToast('Copy operation blocked');
+            return false;
+        }
+    });
+});
+
+onUnmounted(() => {
+    document.removeEventListener('contextmenu', handleContextMenu);
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('dragstart', handleDragStart);
+});
+
 // Loading state and pagination
 const isLoading = ref(false);
 const projectsPerPage = ref(3); // Set to 3 to enable pagination with "Load More"
 const currentPage = ref(1);
 const showCaseStudy = ref(false);
 const currentProject = ref(null);
+
+// Toast notification variables
+const showToast = ref(false);
+const toastMessage = ref('');
 
 // Computed properties
 const filteredProjects = computed(() => {
@@ -465,6 +528,19 @@ provide('hasMoreProjects', hasMoreProjects);
 
 // Intersection Observer for fade-in effects
 onMounted(() => {
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dragstart', handleDragStart);
+
+    // Also prevent copy events
+    document.addEventListener('copy', (e) => {
+        if (e.target.closest('.protected-image-container')) {
+            e.preventDefault();
+            showProtectionToast('Copy operation blocked');
+            return false;
+        }
+    });
+
     // Using Vue's built-in nextTick to ensure the DOM is fully rendered
     setTimeout(() => {
         const observerOptions = {
@@ -530,5 +606,47 @@ onMounted(() => {
 /* Explicit hover border styles for portfolio cards */
 .hover\:border-orange-500:hover {
     border-color: #f97316 !important;
+}
+
+/* Protected image container - handles all the protections */
+.protected-image-container {
+  position: relative;
+  pointer-events: auto; /* Allow interactions with the container */
+  overflow: hidden;
+}
+
+/* Only images inside the container should be non-interactive */
+.protected-image-container img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Apply CSS protection pattern over the image */ 
+.protected-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.02) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0.02) 75%,
+    transparent 75%
+  );
+  background-size: 4px 4px;
+  pointer-events: none;
+  z-index: 5;
 }
 </style>

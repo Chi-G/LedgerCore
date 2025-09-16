@@ -17,3 +17,4 @@
     import MainContact from './mainContact.vue';
     import FaqSection from './faq.vue';
 </script>
+ 
