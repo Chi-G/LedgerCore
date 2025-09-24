@@ -32,7 +32,15 @@ Route::get('/contact', function () {
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::fallback(function () {
-    return Inertia::render('ErrorHandler')
-        ->withViewData(['title' => 'Page Not Found'])
-        ->setStatusCode(404);
+    $path = request()->path();
+    $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+    if (!empty($extension)) {
+        abort(404);
+    }
+
+    return Inertia::render('ErrorHandler', [
+        'status' => 404,
+        'message' => 'Page Not Found'
+    ]);
 });

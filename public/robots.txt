@@ -17,4 +17,3 @@ Allow: /images/
 
 # Sitemaps
 Sitemap: https://forahia.org.ng/sitemap.xml
-Sitemap: https://forahia.org.ng/sitemap-blog.xml
