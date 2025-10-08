@@ -81,7 +81,7 @@
                         class="text-3xl md:text-4xl font-bold text-accent mb-2"
                         id="revenue-counter"
                     >
-                        $50M+
+                        $10K+
                     </div>
                     <div class="text-gray-400">Client Revenue Generated</div>
                 </div>
@@ -93,7 +93,7 @@
                         50+
                     </div>
                     <div class="text-gray-400">
-                        Businesses Transform
+                        Businesses Transformed
                     </div>
                 </div>
                 <div class="text-center">
@@ -109,3 +109,7 @@
         </div>
     </section>
 </template>
+
+<script setup>
+import { Link } from '@inertiajs/vue3'
+</script>

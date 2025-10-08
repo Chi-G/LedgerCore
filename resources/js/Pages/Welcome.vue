@@ -62,7 +62,7 @@ onMounted(() => {
                 const el = entry.target
                 const text = el.textContent || ''
                 if (text.includes('$')) {
-                    el.textContent = '$5M+'
+                    el.textContent = '$10K+'
                 } else if (text.includes('+')) {
                     const number = parseInt(text.replace(/[^0-9]/g, ''))
                     if (!Number.isNaN(number)) {

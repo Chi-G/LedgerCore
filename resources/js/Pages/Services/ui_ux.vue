@@ -190,44 +190,6 @@
                 </div>
             </div>
 
-            <!-- UI/UX Testimonial -->
-            <div class="card bg-gray-900/50 backdrop-blur-sm border border-gray-700">
-                <div class="flex items-start space-x-4">
-                    <div class="protected-image-container relative w-16 h-16 rounded-full overflow-hidden">
-                        <!-- Main image with proper styling -->
-                        <div class="w-full h-full bg-cover bg-center"
-                             style="background-image: url('michael_ndubuisi.jpg');">
-                        </div>
-
-                        <!-- Permanent subtle watermark -->
-                        <div class="absolute inset-0 flex items-center justify-center z-10 opacity-20">
-                            <span class="text-[10px] font-bold text-white rotate-45 transform select-none"></span>
-                        </div>
-
-                        <!-- Interactive hover effect with enhanced watermark -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-green-400/40 to-primary/60
-                                    opacity-0 hover:opacity-80 transition-opacity duration-300
-                                    flex items-center justify-center">
-                            <div class="text-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-auto mb-1 text-white"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582a1 1 0 01.646.938V17.5a1 1 0 01-1 1H5.4a1 1 0 01-1-1V6.843a1 1 0 01.646-.938L9 4.323V3a1 1 0 011-1zm0 8a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
-                                </svg>
-                                <span class="text-[8px] font-bold text-white select-none">© FORAHIA</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-gray-300 mb-4 italic">
-                            "Forahia's design team increased our user engagement by 150% and reduced support tickets by 60%. Their understanding of diverse user preferences and cultural nuances is remarkable."
-                        </p>
-                        <div>
-                            <div class="font-semibold text-background">Michael Ndubuisi</div>
-                            <div class="text-sm text-gray-400">Product Manager, GlobalEdu Technologies</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 </template>

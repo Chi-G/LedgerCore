@@ -37,7 +37,7 @@
                         <li><Link href="/services" class="text-gray-400 hover:text-accent transition-colors">Services</Link></li>
                         <li><Link href="/portfolio" class="text-gray-400 hover:text-accent transition-colors">Portfolio</Link></li>
                         <li><Link href="/about" class="text-gray-400 hover:text-accent transition-colors">About Us</Link></li>
-                        <li><Link href="/clients" class="text-gray-400 hover:text-accent transition-colors">Success Stories</Link></li>
+                        <li><Link href="/client" class="text-gray-400 hover:text-accent transition-colors">Success Stories</Link></li>
                     </ul>
                 </div>
 

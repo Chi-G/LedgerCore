@@ -175,7 +175,32 @@ function loadMore() {
 }
 
 .portfolio-section {
-    padding-top: 0rem; /* Reduced padding at the top */
-    padding-bottom: 4rem; /* Increased padding at the bottom */
+    padding-top: 0rem;
+    padding-bottom: 3rem;
+}
+
+/* Ensure dynamic hover colors work for project buttons */
+.hover\:bg-orange-500:hover {
+    background-color: #f97316 !important;
+}
+
+.hover\:bg-accent:hover {
+    background-color: var(--color-accent) !important;
+}
+
+.hover\:bg-green-400:hover {
+    background-color: #4ade80 !important;
+}
+
+.hover\:bg-yellow-400:hover {
+    background-color: #facc15 !important;
+}
+
+.hover\:bg-purple-400:hover {
+    background-color: #a855f7 !important;
+}
+
+.hover\:bg-cyan-400:hover {
+    background-color: #22d3ee !important;
 }
 </style>

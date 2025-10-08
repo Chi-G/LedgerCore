@@ -2,7 +2,9 @@
 <template>
     <MainLayout
         title="Portfolio"
-        description="See how Forahia delivers digital transformation for Nigerian businesses—explore our featured projects, case studies, and client success stories."
+        description="See how Forahia delivers digital transformation for Nigerian businesses—explore         title: 'Ally HealthCare Platform',
+        description: 'A healthcare platform providing information about Ally HealthCare's medical services, facilities, and patient resources.',
+        industry: 'healthcare', featured projects, case studies, and client success stories."
     >
         <Hero />
 
@@ -49,15 +51,16 @@ import strongmasImage from '../../../../public/strongmas.jpg';
 // Filter options
 const industries = [
     { value: 'all', label: 'All Industries' },
-    { value: 'real Estate', label: 'Real Estate' },
-    { value: 'health', label: 'Healthcare' },
+    { value: 'real-estate', label: 'Real Estate' },
+    { value: 'healthcare', label: 'Healthcare' },
     { value: 'fashion', label: 'Fashion' },
     { value: 'technology', label: 'Technology' },
     { value: 'automotive', label: 'Automotive' }
 ];
 
 const complexities = [
-    { value: 'all', label: 'All Complexity' },
+    { value: 'all', label: 'All Complexities' },
+    { value: 'simple', label: 'Simple' },
     { value: 'medium', label: 'Medium' },
     { value: 'complex', label: 'Complex' },
     { value: 'enterprise', label: 'Enterprise' }
@@ -75,7 +78,7 @@ const portfolioProjects = reactive([
         id: 'norte',
         title: 'Norte Investments',
         description: 'A corporate platform for Norte Investments Limited showcasing their services in construction, real estate, and business investments.',
-        industry: 'real Estate',
+        industry: 'real-estate',
         complexity: 'enterprise',
         image: norteImage,
         fallbackImage: norteImage,
@@ -203,8 +206,8 @@ const portfolioProjects = reactive([
         id: 'bas',
         title: 'BAS Technologies',
         description: 'A modern web app for AllyCare, offering users easy access to healthcare information and digital medical services.',
-        industry: 'health',
-        complexity: 'medium',
+        industry: 'healthcare',
+        complexity: 'simple',
         image: allycarewebsiteImage,
         fallbackImage: allycarewebsiteImage,
         metrics: [
@@ -628,7 +631,7 @@ onMounted(() => {
   -ms-user-select: none;
 }
 
-/* Apply CSS protection pattern over the image */ 
+/* Apply CSS protection pattern over the image */
 .protected-image-container::after {
   content: '';
   position: absolute;

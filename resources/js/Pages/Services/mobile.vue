@@ -166,38 +166,6 @@
                 </div>
             </div>
 
-            <!-- Mobile App Testimonial -->
-            <div class="card bg-gray-900/50 backdrop-blur-sm border border-gray-700">
-                <div class="flex items-start space-x-4">
-                    <div class="w-16 h-16 rounded-full overflow-hidden relative protected-image-container"
-                         style="user-select: none; position: relative;">
-                        <!-- Overlaid watermark that prevents easy downloading -->
-                        <div class="absolute inset-0 flex items-center justify-center z-20 opacity-30 pointer-events-none select-none">
-                            <span class="text-xs font-bold text-white rotate-45 transform scale-75"></span>
-                        </div>
-                        <!-- Main image with CSS protection -->
-                        <div class="w-full h-full bg-cover bg-center protected-image"
-                             style="background-image: url('/sarah_chen.jpeg');
-                                    user-select: none;
-                                    -webkit-user-drag: none;
-                                    -khtml-user-drag: none;
-                                    -moz-user-drag: none;
-                                    -o-user-drag: none;"
-                             draggable="false"
-                             oncontextmenu="return false;">
-                        </div>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-gray-300 mb-4 italic">
-                            "Our fintech app built by Forahia has processed over $120 million in transactions. Their expertise in mobile payment systems and cross-border solutions is unmatched."
-                        </p>
-                        <div>
-                            <div class="font-semibold text-background">Sarah Chen</div>
-                            <div class="text-sm text-gray-400">CTO, GlobalPay Solutions</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 </template>

@@ -1,9 +1,8 @@
 <template>
     <Transition name="modal">
-        <div v-if="show" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
-            <div class="flex items-center justify-center min-h-screen p-4 w-full">
-                <div class="bg-secondary rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                    <div class="p-8">
+        <div v-if="show" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 modal-backdrop" @click="handleBackdropClick">
+            <div class="bg-secondary rounded-xl max-w-4xl w-full max-h-[85vh] overflow-y-auto shadow-2xl modal-content" @click.stop>
+                <div class="p-8">
                         <!-- Modal Header -->
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-2xl font-bold text-background">{{ project?.caseStudy?.title || 'Case Study Details' }}</h2>
@@ -22,12 +21,11 @@
                     </div>
                 </div>
             </div>
-        </div>
     </Transition>
 </template>
 
 <script setup>
-import { watch } from 'vue';
+import { watch, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
     project: {
@@ -45,6 +43,28 @@ const emit = defineEmits(['close']);
 function close() {
     emit('close');
 }
+
+function handleBackdropClick(event) {
+    // Only close if clicking the backdrop (not the modal content)
+    if (event.target === event.currentTarget) {
+        close();
+    }
+}
+
+function handleKeyDown(event) {
+    if (event.key === 'Escape' && props.show) {
+        close();
+    }
+}
+
+// Add/remove event listeners for keyboard
+onMounted(() => {
+    document.addEventListener('keydown', handleKeyDown);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('keydown', handleKeyDown);
+});
 
 // When modal is shown, prevent body scroll
 watch(() => props.show, (value) => {
@@ -74,5 +94,29 @@ watch(() => props.show, (value) => {
 .modal-enter-from .bg-secondary,
 .modal-leave-to .bg-secondary {
   transform: scale(0.95);
+}
+
+/* Ensure modal is always above header and other elements */
+.modal-backdrop {
+  z-index: 9999;
+}
+
+/* Smooth scrolling for modal content */
+.modal-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
 }
 </style>

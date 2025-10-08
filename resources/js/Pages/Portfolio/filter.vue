@@ -2,7 +2,7 @@
     <section class="section-padding bg-secondary portfolio-section">
         <div class="container-max">
             <!-- Filter Controls -->
-            <div class="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 mb-12">
+            <div class="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 mb-6">
                 <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
                     <!-- Industry Filter -->
                     <div class="flex flex-col sm:flex-row gap-4 flex-1">
@@ -12,12 +12,12 @@
                             </svg>
                             <span class="text-background font-medium">Filter by:</span>
                         </div>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex flex-wrap gap-3">
                             <button
                                 v-for="industry in industries"
                                 :key="industry.value"
-                                class="filter-btn px-4 py-2 bg-gray-800 text-gray-300 rounded-lg transition-all duration-200 hover:bg-gray-700 hover:text-background"
-                                :class="{'bg-accent text-primary font-medium': filterState.currentIndustry === industry.value}"
+                                class="filter-btn px-5 py-2.5 bg-gray-800 text-gray-300 rounded-lg transition-all duration-200 hover:bg-gray-700 hover:text-white border border-gray-600 hover:border-gray-500 font-medium text-sm"
+                                :class="{'bg-accent text-primary font-semibold border-accent shadow-lg': filterState.currentIndustry === industry.value}"
                                 @click="selectIndustry(industry.value)"
                             >
                                 {{ industry.label }}
@@ -25,30 +25,33 @@
                         </div>
                     </div>
 
-                    <!-- Complexity Filter -->
+                    <!-- Industry Filter Dropdown -->
                     <div class="flex items-center space-x-4">
-                        <select
-                            class="bg-gray-800 text-background border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
-                            v-model="filterState.currentComplexity"
-                            @change="changeComplexity($event)"
-                        >
-                            <option
-                                v-for="complexity in complexities"
-                                :key="complexity.value"
-                                :value="complexity.value"
+                        <div class="relative">
+                            <select
+                                class="bg-gray-800 text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent cursor-pointer transition-all duration-200 hover:border-gray-500"
+                                v-model="filterState.currentIndustry"
+                                @change="changeIndustry($event)"
                             >
-                                {{ complexity.label }}
-                            </option>
-                        </select>
+                                <option value="all">All Industries</option>
+                                <option value="real-estate">Real Estate</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="fashion">Fashion</option>
+                                <option value="technology">Technology</option>
+                                <option value="automotive">Automotive</option>
+                            </select>
+                        </div>
 
                         <!-- Reset Filter -->
                         <button
-                            class="text-gray-400 hover:text-accent transition-colors"
+                            class="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-accent hover:bg-gray-800 rounded-lg transition-all duration-200 border border-gray-600 hover:border-accent group"
                             @click="resetFilters"
+                            title="Reset all filters"
                         >
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                             </svg>
+                            <span class="text-sm font-medium hidden sm:inline">Reset</span>
                         </button>
                     </div>
                 </div>
@@ -66,8 +69,8 @@ const props = defineProps({
         type: Array,
         default: () => [
             { value: 'all', label: 'All Industries' },
-            { value: 'real Estate', label: 'Real Estate' },
-            { value: 'health', label: 'Healthcare' },
+            { value: 'real-estate', label: 'Real Estate' },
+            { value: 'healthcare', label: 'Healthcare' },
             { value: 'fashion', label: 'Fashion' },
             { value: 'technology', label: 'Technology' },
             { value: 'automotive', label: 'Automotive' }
@@ -76,7 +79,8 @@ const props = defineProps({
     complexities: {
         type: Array,
         default: () => [
-            { value: 'all', label: 'All Complexity' },
+            { value: 'all', label: 'All Complexities' },
+            { value: 'simple', label: 'Simple' },
             { value: 'medium', label: 'Medium' },
             { value: 'complex', label: 'Complex' },
             { value: 'enterprise', label: 'Enterprise' }
@@ -97,6 +101,10 @@ const updateFilters = inject('updateFilters');
 // Filter methods
 function selectIndustry(industry) {
     updateFilters(industry, props.filterState.currentComplexity);
+}
+
+function changeIndustry(event) {
+    updateFilters(event.target.value, props.filterState.currentComplexity);
 }
 
 function changeComplexity(event) {
@@ -129,6 +137,7 @@ function resetFilters() {
 }
 
 .portfolio-section {
-    padding-top: 4rem; /* Reduced padding at the top */
+    padding-top: 2rem; /* Reduced from 4rem to bring closer to hero */
+    padding-bottom: 2rem; /* Reduced bottom padding */
 }
 </style>

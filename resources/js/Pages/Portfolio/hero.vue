@@ -53,7 +53,7 @@
                     <div class="text-gray-400">Revenue Generated</div>
                 </div> -->
                 <div class="text-center">
-                    <div class="text-3xl md:text-4xl font-bold text-green-400 mb-2">300+</div>
+                    <div class="text-3xl md:text-4xl font-bold text-green-400 mb-2">150+</div>
                     <div class="text-gray-400">Projects Delivered</div>
                 </div>
                 <div class="text-center">
