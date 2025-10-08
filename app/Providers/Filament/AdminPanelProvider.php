@@ -2,6 +2,11 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\StatsOverviewWidget;
+use App\Filament\Widgets\LatestPortfolioProjectsWidget;
+use App\Filament\Widgets\RecentTestimonialsWidget;
+use App\Filament\Widgets\ProjectsByIndustryWidget;
+use App\Filament\Widgets\QuickActionsWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -36,10 +41,10 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                StatsOverviewWidget::class,
+                LatestPortfolioProjectsWidget::class,
+                RecentTestimonialsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

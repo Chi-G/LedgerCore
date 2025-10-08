@@ -17,7 +17,7 @@ class Contact extends Model
         'company',
         'position',
         'project_type',
-        'budget',
+        'budget', 
         'timeline',
         'message',
         'status',
