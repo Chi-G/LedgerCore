@@ -1,11 +1,11 @@
 
-/* Import critical CSS first for fastest rendering */
-@import './critical.css';
-
 /* Load fonts with preconnect for faster loading */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap&display=swap');
 @import 'tailwindcss';
+
+/* Import critical CSS first for fastest rendering */
+@import './critical.css';
 
 /* Define Tailwind v4 tokens BEFORE importing files that use them */
 @theme {

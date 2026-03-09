@@ -260,7 +260,7 @@
             <p>
                 <strong>Forahia Digital Innovation</strong><br>
                 Global Digital Transformation Consultancy<br>
-                <a href="mailto:contact@forahia.org.ng" style="color: #3b82f6;">contact@forahia.org.ng</a> |
+                <a href="mailto:biz@forahia.org.ng" style="color: #3b82f6;">biz@forahia.org.ng</a> |
                 <a href="tel:+2347065910449" style="color: #3b82f6;">+234 (0) 706 591 0449</a>
             </p>
         </div>

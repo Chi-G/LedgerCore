@@ -50,7 +50,7 @@
 
 import { ref, computed } from 'vue'
 import { Link, usePage } from '@inertiajs/vue3'
-import NavLink from '@/components/Layout/NavLink.vue'
+import NavLink from '@/Components/Layout/NavLink.vue'
 
 const showMobileMenu = ref(false)
 const toggleMobileMenu = () => {

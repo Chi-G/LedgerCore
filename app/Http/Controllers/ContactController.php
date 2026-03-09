@@ -46,7 +46,7 @@ class ContactController extends Controller
                 'status'       => 'new',
             ]);
 
-            Mail::to(env('MAIL_TO_ADDRESS', env('MAIL_FROM_ADDRESS', 'contact@forahia.org.ng')))
+            Mail::to(config('mail.to'))
                 ->send(new ContactFormMail($contact));
 
             return back()->with('success', 'Thank you for your inquiry! We\'ll get back to you within 2 hours during business hours.');
