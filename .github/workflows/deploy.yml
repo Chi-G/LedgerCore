@@ -36,6 +36,19 @@ jobs:
           VITE_PUSHER_APP_KEY: ${{ secrets.VITE_PUSHER_APP_KEY }}
           VITE_PUSHER_APP_CLUSTER: ${{ secrets.VITE_PUSHER_APP_CLUSTER }}
 
+      - name: Pre-Deployment Cleanup
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.WHOGOHOST_SSH_HOST }}
+          username: ${{ secrets.WHOGOHOST_SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.WHOGOHOST_SSH_PORT }}
+          script: |
+            cd /home/forahiao/public_html/forafix
+            rm -rf vendor
+            rm -f config/*.php
+            rm -f bootstrap/cache/*.php
+
       - name: Deploy to Server via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
