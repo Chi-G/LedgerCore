@@ -44,10 +44,16 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.WHOGOHOST_SSH_PORT }}
           script: |
-            cd /home/forahiao/public_html/forafix_staging
+            cd /home/forahiao/public_html/forahia_staging
             rm -rf vendor
             rm -f config/*.php
             rm -f bootstrap/cache/*.php
+
+      - name: Cleanup Runner for Upload
+        run: |
+          rm -rf node_modules .git tests .github docs .editorconfig .eslintrc .prettierrc package-lock.json README.md
+          # Also remove storage logs but keep the directory
+          rm -rf storage/logs/*.log
 
       - name: Deploy to Server via SCP
         uses: appleboy/scp-action@v0.1.7
@@ -57,10 +63,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.WHOGOHOST_SSH_PORT }}
           source: "."
-          target: "/home/forahiao/public_html/forafix_staging/"
+          target: "/home/forahiao/public_html/forahia_staging/"
           rm: false
           strip_components: 0
-          ignore_list: ".git*,node_modules,storage/*.key,storage/logs/*.log,.env,bootstrap/cache/*.php"
 
       - name: Execute Post-Deployment Commands
         uses: appleboy/ssh-action@master
@@ -70,7 +75,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.WHOGOHOST_SSH_PORT }}
           script: |
-            cd /home/forahiao/public_html/forafix_staging
+            cd /home/forahiao/public_html/forahia_staging
             rm -f bootstrap/cache/*.php
             php artisan config:clear
             php artisan cache:clear
