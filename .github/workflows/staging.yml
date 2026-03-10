@@ -50,7 +50,10 @@ jobs:
             rm -f bootstrap/cache/*.php
 
       - name: Cleanup Runner for Upload
-        run: rm -rf node_modules .git
+        run: |
+          rm -rf node_modules .git tests .github docs .editorconfig .eslintrc .prettierrc package-lock.json README.md
+          # Also remove storage logs but keep the directory
+          rm -rf storage/logs/*.log
 
       - name: Deploy to Server via SCP
         uses: appleboy/scp-action@v0.1.7
