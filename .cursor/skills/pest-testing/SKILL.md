@@ -77,8 +77,8 @@ Use datasets for repetitive tests (validation rules, etc.):
 it('has emails', function (string $email) {
     expect($email)->not->toBeEmpty();
 })->with([
-    'james' => 'james@laravel.com',
-    'taylor' => 'taylor@laravel.com',
+    'james' => 'james@example.com',
+    'taylor' => 'taylor@example.com',
 ]);
 ```
 
@@ -117,7 +117,7 @@ it('may reset the password', function () {
     $page->assertSee('Sign In')
         ->assertNoJavaScriptErrors()
         ->click('Forgot Password?')
-        ->fill('email', 'nuno@laravel.com')
+        ->fill('email', 'test@example.com')
         ->click('Send Reset Link')
         ->assertSee('We have emailed your password reset link!');
 
