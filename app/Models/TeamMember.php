@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class TeamMember extends Model
 {
@@ -73,7 +73,7 @@ class TeamMember extends Model
     // Accessors
     public function getFormattedSkillsAttribute()
     {
-        if (!$this->skills) {
+        if (! $this->skills) {
             return [];
         }
 
@@ -82,7 +82,7 @@ class TeamMember extends Model
 
     public function getYearsExperienceAttribute()
     {
-        if (!$this->joined_date) {
+        if (! $this->joined_date) {
             return null;
         }
 

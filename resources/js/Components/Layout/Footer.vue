@@ -6,7 +6,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center space-x-2 mb-6">
                         <img src="/logo.png" alt="Forahia Logo" class="w-30 h-12 object-contain">
-                        <span class="text-xl font-bold text-background">Forahia Digital Innovation</span>
+                        <span class="text-xl font-bold text-background">Forahia Solutions</span>
                     </div>
                     <p class="text-gray-400 mb-6 max-w-md">
                         Transforming businesses through cutting-edge digital solutions. Where innovation meets execution.
@@ -47,13 +47,13 @@
                     <ul class="space-y-2 text-gray-400">
                         <li>Abuja, Nigeria</li>
                         <li>07065910449</li>
-                        <li>biz@forahia.org.ng</li>
+                        <li>info@forahia.com</li>
                     </ul>
                 </div>
             </div>
 
             <div class="border-t border-gray-800 mt-12 pt-8 text-center">
-                <p class="text-gray-400">© 2025 Forahia Digital Innovation. All Rights Reserved.</p>
+                <p class="text-gray-400">© 2025 Forahia Solutions. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

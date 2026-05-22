@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Models\Contact;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -18,8 +17,6 @@ class ContactFormMail extends Mailable
 
     /**
      * Create a new message instance.
-     *
-     * @param Contact $contact
      */
     public function __construct(Contact $contact)
     {
@@ -32,7 +29,7 @@ class ContactFormMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Contact Form Submission - ' . $this->contact->company,
+            subject: 'New Contact Form Submission - '.$this->contact->company,
         );
     }
 
@@ -43,7 +40,7 @@ class ContactFormMail extends Mailable
     {
         return new Content(
             view: 'emails.contact-form',
-        ); 
+        );
     }
 
     /**

@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\CompanySettings\Schemas;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
@@ -61,7 +61,7 @@ class CompanySettingForm
                     ->label('Value')
                     ->visible(fn ($get) => in_array($get('type'), ['text', 'email', 'url', 'number']))
                     ->placeholder('Enter the setting value')
-                    ->type(fn ($get) => match($get('type')) {
+                    ->type(fn ($get) => match ($get('type')) {
                         'email' => 'email',
                         'url' => 'url',
                         'number' => 'number',

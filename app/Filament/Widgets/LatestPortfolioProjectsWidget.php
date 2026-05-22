@@ -3,18 +3,16 @@
 namespace App\Filament\Widgets;
 
 use App\Models\PortfolioProject;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
-use Illuminate\Database\Eloquent\Builder;
 
 class LatestPortfolioProjectsWidget extends TableWidget
 {
     protected static ?string $heading = 'Latest Portfolio Projects';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected static ?int $sort = 2;
 

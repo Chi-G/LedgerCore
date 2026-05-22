@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class CompanySetting extends Model
 {
@@ -49,7 +49,7 @@ class CompanySetting extends Model
     // Accessors
     public function getTypedValueAttribute()
     {
-        return match($this->type) {
+        return match ($this->type) {
             'boolean' => (bool) $this->value,
             'number' => (float) $this->value,
             'json' => json_decode($this->value, true),

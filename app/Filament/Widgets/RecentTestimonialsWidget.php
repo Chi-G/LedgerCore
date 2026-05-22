@@ -3,16 +3,16 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Testimonial;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
 
 class RecentTestimonialsWidget extends TableWidget
 {
     protected static ?string $heading = 'Recent Testimonials';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected static ?int $sort = 3;
 
@@ -46,15 +46,13 @@ class RecentTestimonialsWidget extends TableWidget
                     ->label('Project Type')
                     ->badge()
                     ->color('info')
-                    ->formatStateUsing(fn (?string $state): string =>
-                        $state ? ucwords(str_replace('-', ' ', $state)) : 'N/A'
+                    ->formatStateUsing(fn (?string $state): string => $state ? ucwords(str_replace('-', ' ', $state)) : 'N/A'
                     ),
 
                 TextColumn::make('rating')
                     ->label('Rating')
                     ->badge()
-                    ->formatStateUsing(fn (?float $state): string =>
-                        $state ? str_repeat('⭐', (int) $state) : 'N/A'
+                    ->formatStateUsing(fn (?float $state): string => $state ? str_repeat('⭐', (int) $state) : 'N/A'
                     )
                     ->color('warning'),
 
@@ -63,6 +61,7 @@ class RecentTestimonialsWidget extends TableWidget
                     ->limit(50)
                     ->tooltip(function (TextColumn $column): ?string {
                         $state = $column->getState();
+
                         return strlen($state) > 50 ? $state : null;
                     }),
 

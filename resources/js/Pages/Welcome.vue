@@ -1,6 +1,6 @@
 <template>
     <MainLayout
-        title="Forahia Digital Innovation - Where Innovation Meets Execution"
+        title="Forahia Solutions - Where Innovation Meets Execution"
         description="Premium digital innovation consultancy transforming Nigerian businesses"
     >
 

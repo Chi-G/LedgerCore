@@ -145,7 +145,7 @@
         <!-- Header -->
         <div class="header">
             <h1>🚀 New Client Request Contact Form Submission</h1>
-            <p>Forahia Digital Innovation</p>
+            <p>Forahia Solutions</p>
         </div>
 
         <!-- Content -->
@@ -243,7 +243,7 @@
             <div class="section">
                 <h2 class="section-title">⚡ Quick Actions</h2>
                 <div style="text-align: center; margin-top: 20px;">
-                    <a href="mailto:{{ $contact->email }}?subject=Re: Your Digital Transformation Inquiry&body=Hi {{ $contact->first_name }},%0D%0A%0D%0AThank you for reaching out to Forahia Digital Innovation..."
+                    <a href="mailto:{{ $contact->email }}?subject=Re: Your Digital Transformation Inquiry&body=Hi {{ $contact->first_name }},%0D%0A%0D%0AThank you for reaching out to Forahia Solutions..."
                        style="display: inline-block; background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin: 0 10px; font-weight: 600;">
                         �� Reply via Email
                     </a>
@@ -258,9 +258,9 @@
         <!-- Footer -->
         <div class="footer">
             <p>
-                <strong>Forahia Digital Innovation</strong><br>
+                <strong>Forahia Solutions</strong><br>
                 Global Digital Transformation Consultancy<br>
-                <a href="mailto:biz@forahia.org.ng" style="color: #3b82f6;">biz@forahia.org.ng</a> |
+                <a href="mailto:info@forahia.com" style="color: #3b82f6;">info@forahia.com</a> |
                 <a href="tel:+2347065910449" style="color: #3b82f6;">+234 (0) 706 591 0449</a>
             </p>
         </div>

@@ -51,7 +51,7 @@ class ProjectsByIndustryWidget extends ChartWidget
                     'borderWidth' => 1,
                 ],
             ],
-            'labels' => array_map(function($industry) {
+            'labels' => array_map(function ($industry) {
                 return ucwords(str_replace('-', ' ', $industry));
             }, array_keys($projects)),
         ];

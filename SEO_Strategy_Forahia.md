@@ -1,4 +1,4 @@
-# SEO Strategy for Forahia.org.ng
+# SEO Strategy for forahia.com
 
 ## Executive Summary
 This document outlines a comprehensive SEO strategy to improve Forahia's search engine ranking, particularly for the keyword "forahia". The strategy includes both on-page and off-page optimization techniques to increase visibility, drive more traffic, and establish Forahia as a leading digital innovation consultancy.
@@ -38,9 +38,9 @@ This document outlines a comprehensive SEO strategy to improve Forahia's search 
 - Portfolio: "See how Forahia has helped businesses achieve digital transformation through innovative solutions and expert consulting."
 
 ### 3. URL Structure
-- Use clean, descriptive URLs: forahia.org.ng/services/digital-transformation
-- Include keywords when relevant: forahia.org.ng/portfolio/business-transformation-case-study
-- Avoid parameters and unnecessary numbers: forahia.org.ng/blog/digital-innovation-trends (NOT forahia.org.ng/blog?id=123)
+- Use clean, descriptive URLs: forahia.com/services/digital-transformation
+- Include keywords when relevant: forahia.com/portfolio/business-transformation-case-study
+- Avoid parameters and unnecessary numbers: forahia.com/blog/digital-innovation-trends (NOT forahia.com/blog?id=123)
 
 ### 4. Content Strategy
 - Create in-depth service pages (1000+ words) describing Forahia's offerings
@@ -135,7 +135,7 @@ Since "forahia" is a unique brand name, ranking for this keyword should be achie
 2. **Technical Brand Optimization**
    - Implement schema.org Organization markup with "Forahia" as the name
    - Create social media profiles with consistent branding and regular activity
-   - Secure forahia.org.ng domain and relevant variants (.ng, .co, etc.)
+   - Secure forahia.com domain and relevant variants (.ng, .co, etc.)
 
 3. **Content Strategy for Brand Recognition**
    - Create content series like "Forahia Insights" or "Forahia Digital Trends"

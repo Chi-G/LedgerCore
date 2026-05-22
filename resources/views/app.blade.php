@@ -7,7 +7,7 @@
     <meta name="description" content="Forahia Enterprise offers cutting-edge software development, web design, mobile app development, digital transformation, and IT consulting services to businesses across Nigeria and beyond.">
     <meta name="keywords" content="forahia, Forahia Enterprise, tech services, software development, web design, mobile app development, digital transformation, IT consulting, Nigeria tech company">
 
-    <link rel="canonical" href="https://forahia.org.ng">
+    <link rel="canonical" href="https://forahia.com">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2">

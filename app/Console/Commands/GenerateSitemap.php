@@ -4,8 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
 class GenerateSitemap extends Command
 {
@@ -31,7 +29,7 @@ class GenerateSitemap extends Command
         $this->info('Generating sitemap...');
 
         // Base URL of your site
-        $baseUrl = config('app.url', 'https://forahia.org.ng');
+        $baseUrl = config('app.url', 'https://forahia.com');
 
         // Main public routes we want to include
         $routes = [
@@ -42,25 +40,25 @@ class GenerateSitemap extends Command
                 'changefreq' => 'daily',
             ],
             '/about' => [
-                'loc' => $baseUrl . '/about',
+                'loc' => $baseUrl.'/about',
                 'lastmod' => date('Y-m-d'),
                 'priority' => '0.8',
                 'changefreq' => 'weekly',
             ],
             '/services' => [
-                'loc' => $baseUrl . '/services',
+                'loc' => $baseUrl.'/services',
                 'lastmod' => date('Y-m-d'),
                 'priority' => '0.9',
                 'changefreq' => 'weekly',
             ],
             '/portfolio' => [
-                'loc' => $baseUrl . '/portfolio',
+                'loc' => $baseUrl.'/portfolio',
                 'lastmod' => date('Y-m-d'),
                 'priority' => '0.9',
                 'changefreq' => 'weekly',
             ],
             '/contact' => [
-                'loc' => $baseUrl . '/contact',
+                'loc' => $baseUrl.'/contact',
                 'lastmod' => date('Y-m-d'),
                 'priority' => '0.7',
                 'changefreq' => 'monthly',
@@ -77,10 +75,10 @@ class GenerateSitemap extends Command
 
         foreach ($routes as $route) {
             $xml .= '<url>';
-            $xml .= '<loc>' . $route['loc'] . '</loc>';
-            $xml .= '<lastmod>' . $route['lastmod'] . '</lastmod>';
-            $xml .= '<priority>' . $route['priority'] . '</priority>';
-            $xml .= '<changefreq>' . $route['changefreq'] . '</changefreq>';
+            $xml .= '<loc>'.$route['loc'].'</loc>';
+            $xml .= '<lastmod>'.$route['lastmod'].'</lastmod>';
+            $xml .= '<priority>'.$route['priority'].'</priority>';
+            $xml .= '<changefreq>'.$route['changefreq'].'</changefreq>';
             $xml .= '</url>';
         }
 

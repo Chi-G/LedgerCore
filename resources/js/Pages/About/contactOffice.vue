@@ -61,7 +61,7 @@
                             </div>
                             <div>
                                 <h4 class="text-lg font-semibold text-background mb-1">Email</h4>
-                                <p class="text-gray-400">biz@forahia.org.ng</p>
+                                <p class="text-gray-400">info@forahia.com</p>
                             </div>
                         </div>
 
