@@ -1,4 +1,4 @@
-// Service Worker for Forahia Enterprises
+// Service Worker for Forahia Solutions
 
 // Cache version - increment this whenever assets change significantly
 const CACHE_VERSION = 'forahia-v1';
@@ -37,7 +37,7 @@ self.addEventListener('activate', (event) => {
         })
       );
     })
-    .then(() => self.clients.claim())
+      .then(() => self.clients.claim())
   );
 });
 

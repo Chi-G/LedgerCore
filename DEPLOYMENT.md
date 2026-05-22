@@ -1,4 +1,4 @@
-# Deployment Guide for Forahia Enterprise
+# Deployment Guide for Forahia Solutions
 
 ## Step 1: Build Assets
 In your local environment, run:

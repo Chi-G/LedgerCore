@@ -45,7 +45,7 @@ const props = defineProps({
   },
   siteName: {
     type: String,
-    default: 'Forahia Enterprises'
+    default: 'Forahia Solutions'
   },
   twitterHandle: {
     type: String,

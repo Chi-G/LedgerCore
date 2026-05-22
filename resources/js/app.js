@@ -37,7 +37,7 @@ createInertiaApp({
     app.mount(el)
   },
 
-  title: title => `${title} - Forahia Enterprises`,
+  title: title => `${title} - Forahia Solutions`,
 })
 
 document.addEventListener('inertia:error', (event) => {

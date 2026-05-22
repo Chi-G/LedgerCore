@@ -1,4 +1,4 @@
-// SEO Utilities for Forahia Enterprises
+// SEO Utilities for Forahia Solutions
 
 /**
  * Generate structured metadata for a page
@@ -7,13 +7,13 @@
  */
 export function generateMetadata(options = {}) {
   const defaults = {
-    title: 'Forahia Enterprises - Digital Innovation Consultancy',
+    title: 'Forahia Solutions - Digital Innovation Consultancy',
     description: 'Transforming businesses through world-class digital innovation. We bridge the gap between ambitious business dreams and technical execution.',
     keywords: 'forahia, digital innovation, business transformation, web development, technology consultancy',
     image: '/logo.png',
     url: typeof window !== 'undefined' ? window.location.href : 'https://forahia.com',
     type: 'website',
-    siteName: 'Forahia Enterprises',
+    siteName: 'Forahia Solutions',
     twitterHandle: '@forahia',
   };
 
@@ -30,7 +30,7 @@ export function generateMetadata(options = {}) {
     name: meta.siteName,
     publisher: {
       '@type': 'Organization',
-      name: 'Forahia Enterprises',
+      name: 'Forahia Solutions',
       logo: {
         '@type': 'ImageObject',
         url: 'https://forahia.com/logo.png'
