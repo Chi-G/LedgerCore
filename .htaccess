@@ -5,6 +5,9 @@
     # Force trailing slash on forafix to prevent parent app routing 404s
     RewriteRule ^forafix$ /forafix/ [R=301,L]
 
+    # Force trailing slash on inventory to prevent parent app routing 404s
+    RewriteRule ^inventory$ /inventory/ [R=301,L]
+
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
