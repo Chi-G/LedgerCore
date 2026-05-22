@@ -55,4 +55,4 @@ Check that:
 - `.env` file has `SESSION_DRIVER=file` (not database)
 
 ## Step 8: Test Website
-Visit https://forahia.org.ng to verify everything works correctly.
+Visit https://forahia.com to verify everything works correctly.

@@ -2,13 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
+use App\Models\CompanySetting;
 use App\Models\PortfolioProject;
 use App\Models\Service;
-use App\Models\Testimonial;
-use App\Models\CompanySetting;
 use App\Models\TeamMember;
+use App\Models\Testimonial;
+use Illuminate\Database\Seeder;
 
 class AdminContentSeeder extends Seeder
 {
@@ -224,7 +223,7 @@ class AdminContentSeeder extends Seeder
         CompanySetting::create([
             'key' => 'contact_email',
             'label' => 'Contact Email',
-            'value' => 'hello@forahia.org.ng',
+            'value' => 'hello@forahia.com',
             'type' => 'text',
             'description' => 'Primary contact email address',
             'group' => 'contact',
@@ -258,7 +257,7 @@ class AdminContentSeeder extends Seeder
             'department' => 'Leadership',
             'bio' => 'Passionate full-stack developer with over 8 years of experience building scalable web applications. Specializes in Laravel, Vue.js, and modern web technologies.',
             'image' => 'team/adebayo-ogunmola.jpg',
-            'email' => 'adebayo@forahia.org.ng',
+            'email' => 'adebayo@forahia.com',
             'linkedin' => 'https://linkedin.com/in/adebayo-ogunmola',
             'twitter' => 'https://twitter.com/adebayo_dev',
             'skills' => [
@@ -281,7 +280,7 @@ class AdminContentSeeder extends Seeder
             'department' => 'Development',
             'bio' => 'Creative frontend developer and designer who brings beautiful, user-centered designs to life with modern technologies and best practices.',
             'image' => 'team/funmi-adeleke.jpg',
-            'email' => 'funmi@forahia.org.ng',
+            'email' => 'funmi@forahia.com',
             'linkedin' => 'https://linkedin.com/in/funmi-adeleke',
             'twitter' => null,
             'skills' => [

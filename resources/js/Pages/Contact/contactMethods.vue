@@ -63,8 +63,8 @@
                         </div>
                         <h3 class="text-xl font-semibold text-background mb-4">Email</h3>
                         <p class="text-gray-400 mb-4">Detailed project discussions</p>
-                        <a href="mailto:biz@forahia.org.ng" class="text-purple-400 font-semibold hover:text-purple-400/80 transition-colors">
-                            biz@forahia.org.ng
+                        <a href="mailto:info@forahia.com" class="text-purple-400 font-semibold hover:text-purple-400/80 transition-colors">
+                            info@forahia.com
                         </a>
                         <p class="text-sm text-gray-500 mt-2">24-hour response guarantee</p>
                     </div>

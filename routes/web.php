@@ -1,13 +1,12 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
 });
-
 
 Route::get('/services', function () {
     return Inertia::render('Services/index');
@@ -35,12 +34,12 @@ Route::fallback(function () {
     $path = request()->path();
     $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-    if (!empty($extension)) {
+    if (! empty($extension)) {
         abort(404);
     }
 
     return Inertia::render('ErrorHandler', [
         'status' => 404,
-        'message' => 'Page Not Found'
+        'message' => 'Page Not Found',
     ]);
 });

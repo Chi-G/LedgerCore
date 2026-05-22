@@ -1,7 +1,7 @@
-# Forahia Digital Innovation
+# Forahia Solutions
 
 <p align="center">
-  <img src="public/logo.png" alt="Forahia Digital Innovation Logo" width="200" />
+  <img src="public/logo.png" alt="Forahia Solutions Logo" width="200" />
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
 
 ## 🌟 About Forahia
 
-Forahia Digital Innovation is a global digital transformation consultancy that helps businesses worldwide modernize through technology. We specialize in comprehensive digital solutions designed to transform business operations and accelerate growth across multiple industries.
+Forahia Solutions is a global digital transformation consultancy that helps businesses worldwide modernize through technology. We specialize in comprehensive digital solutions designed to transform business operations and accelerate growth across multiple industries.
 
 ### Our Expertise
 - **Web Development** (React, Node.js, Python)
@@ -29,7 +29,7 @@ Forahia Digital Innovation is a global digital transformation consultancy that h
 
 ## 🚀 Project Overview
 
-This repository contains the official website and client portal for Forahia Digital Innovation, built with modern web technologies to showcase our services, portfolio, and provide tools for our clients.
+This repository contains the official website and client portal for Forahia Solutions, built with modern web technologies to showcase our services, portfolio, and provide tools for our clients.
 
 ### Key Features
 - **Interactive Portfolio Showcase** - Dynamic project filtering and case studies
@@ -106,7 +106,7 @@ forahia-enterprises/
 - Clear hierarchy and readability
 - GitHub-appropriate styling
 
-This README now properly represents the Forahia Digital Innovation project and provides all the necessary information for developers, clients, and stakeholders to understand the project's purpose and capabilities.
+This README now properly represents the Forahia Solutions project and provides all the necessary information for developers, clients, and stakeholders to understand the project's purpose and capabilities.
 
 ## 📱 Pages & Features
 
@@ -163,11 +163,11 @@ composer run test
 
 ## 📱 License
 
-This project is proprietary software owned by Forahia Digital Innovation. All rights reserved.
+This project is proprietary software owned by Forahia Solutions. All rights reserved.
 
 ## 📱 Contact
 
-- **Website**: [forahia.org.ng](https://forahia.org.ng)
+- **Website**: [forahia.com](https://forahia.com)
 - **Email**: biz@forahia.com
 - **Phone**: +234 (0) 706 591 0449
 - **Address**: Independence Avenue Central Business District, Abuja, Nigeria
@@ -179,5 +179,5 @@ We serve clients across multiple continents with our headquarters strategically 
 ---
 
 <p align="center">
-  <strong>Built with ❤️ by the Forahia Digital Innovation Team</strong>
+  <strong>Built with ❤️ by the Forahia Solutions Team</strong>
 </p>

@@ -17,7 +17,7 @@ class Contact extends Model
         'company',
         'position',
         'project_type',
-        'budget', 
+        'budget',
         'timeline',
         'message',
         'status',
@@ -32,7 +32,7 @@ class Contact extends Model
     // Accessor for full name
     public function getFullNameAttribute()
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     // Accessor for formatted project type

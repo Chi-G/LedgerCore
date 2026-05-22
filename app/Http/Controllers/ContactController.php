@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactFormMail;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
-use App\Mail\ContactFormMail;
 
 class ContactController extends Controller
 {
@@ -33,17 +32,17 @@ class ContactController extends Controller
 
         try {
             $contact = Contact::create([
-                'first_name'   => $request->firstName,
-                'last_name'    => $request->lastName,
-                'email'        => $request->email,
-                'phone'        => $request->phone,
-                'company'      => $request->company,
-                'position'     => $request->position,
+                'first_name' => $request->firstName,
+                'last_name' => $request->lastName,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'company' => $request->company,
+                'position' => $request->position,
                 'project_type' => $request->projectType,
-                'budget'       => $request->budget,
-                'timeline'     => $request->timeline,
-                'message'      => $request->message,
-                'status'       => 'new',
+                'budget' => $request->budget,
+                'timeline' => $request->timeline,
+                'message' => $request->message,
+                'status' => 'new',
             ]);
 
             Mail::to(config('mail.to'))
@@ -52,7 +51,7 @@ class ContactController extends Controller
             return back()->with('success', 'Thank you for your inquiry! We\'ll get back to you within 2 hours during business hours.');
 
         } catch (\Exception $e) {
-            Log::error('Contact form submission error: ' . $e->getMessage());
+            Log::error('Contact form submission error: '.$e->getMessage());
 
             return back()->with('error', 'Sorry, there was an error submitting your form. Please try again or contact us directly.');
         }

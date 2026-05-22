@@ -254,7 +254,7 @@
 
                         <div class="text-center">
                             <p class="text-sm text-gray-400 mb-4">
-                                Can't find a suitable time? <a href="mailto:biz@forahia.org.ng" class="text-accent hover:underline">Contact us directly</a>
+                                Can't find a suitable time? <a href="mailto:info@forahia.com" class="text-accent hover:underline">Contact us directly</a>
                             </p>
                         </div>
                     </div>

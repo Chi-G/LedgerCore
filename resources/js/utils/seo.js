@@ -11,7 +11,7 @@ export function generateMetadata(options = {}) {
     description: 'Transforming businesses through world-class digital innovation. We bridge the gap between ambitious business dreams and technical execution.',
     keywords: 'forahia, digital innovation, business transformation, web development, technology consultancy',
     image: '/logo.png',
-    url: typeof window !== 'undefined' ? window.location.href : 'https://forahia.org.ng',
+    url: typeof window !== 'undefined' ? window.location.href : 'https://forahia.com',
     type: 'website',
     siteName: 'Forahia Enterprises',
     twitterHandle: '@forahia',
@@ -25,7 +25,7 @@ export function generateMetadata(options = {}) {
     '@type': meta.type === 'article' ? 'Article' : 'WebSite',
     headline: meta.title,
     description: meta.description,
-    image: meta.image.startsWith('http') ? meta.image : `https://forahia.org.ng${meta.image}`,
+    image: meta.image.startsWith('http') ? meta.image : `https://forahia.com${meta.image}`,
     url: meta.url,
     name: meta.siteName,
     publisher: {
@@ -33,7 +33,7 @@ export function generateMetadata(options = {}) {
       name: 'Forahia Enterprises',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://forahia.org.ng/logo.png'
+        url: 'https://forahia.com/logo.png'
       }
     }
   };
@@ -61,7 +61,7 @@ export function generateMetadata(options = {}) {
       // Open Graph
       { property: 'og:title', content: meta.title },
       { property: 'og:description', content: meta.description },
-      { property: 'og:image', content: meta.image.startsWith('http') ? meta.image : `https://forahia.org.ng${meta.image}` },
+      { property: 'og:image', content: meta.image.startsWith('http') ? meta.image : `https://forahia.com${meta.image}` },
       { property: 'og:url', content: meta.url },
       { property: 'og:type', content: meta.type },
       { property: 'og:site_name', content: meta.siteName },
@@ -71,7 +71,7 @@ export function generateMetadata(options = {}) {
       { name: 'twitter:site', content: meta.twitterHandle },
       { name: 'twitter:title', content: meta.title },
       { name: 'twitter:description', content: meta.description },
-      { name: 'twitter:image', content: meta.image.startsWith('http') ? meta.image : `https://forahia.org.ng${meta.image}` },
+      { name: 'twitter:image', content: meta.image.startsWith('http') ? meta.image : `https://forahia.com${meta.image}` },
 
       // Additional SEO
       { name: 'robots', content: 'index, follow' },
@@ -87,7 +87,7 @@ export function generateMetadata(options = {}) {
  * @returns {string} - Full canonical URL
  */
 export function getCanonicalUrl(path = '') {
-  const baseUrl = 'https://forahia.org.ng';
+  const baseUrl = 'https://forahia.com';
   return `${baseUrl}${path.startsWith('/') ? path : `/${path}`}`;
 }
 

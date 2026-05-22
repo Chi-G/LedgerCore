@@ -23,3 +23,12 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# AI and Agents
+.agents/
+.ai/
+.claude/
+.gemini/
+AGENTS.md
+CLAUDE.md
+GEMINI.md

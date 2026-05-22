@@ -3,12 +3,12 @@
 namespace App\Filament\Resources\PortfolioProjects\Schemas;
 
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class PortfolioProjectForm
@@ -21,7 +21,7 @@ class PortfolioProjectForm
                     ->required()
                     ->maxLength(255)
                     ->placeholder('Enter project title'),
-                
+
                 Textarea::make('description')
                     ->required()
                     ->maxLength(1000)
@@ -54,7 +54,7 @@ class PortfolioProjectForm
                         'enterprise' => 'Enterprise',
                     ])
                     ->placeholder('Select complexity'),
-                
+
                 Select::make('color')
                     ->required()
                     ->options([
@@ -75,7 +75,7 @@ class PortfolioProjectForm
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(5120) // 5MB
                     ->label('Primary Image'),
-                
+
                 FileUpload::make('fallback_image')
                     ->image()
                     ->directory('portfolio')
@@ -125,7 +125,7 @@ class PortfolioProjectForm
                     ->label('Featured Project')
                     ->helperText('Show on homepage and featured sections')
                     ->default(false),
-                
+
                 Toggle::make('is_active')
                     ->label('Active/Published')
                     ->default(true)

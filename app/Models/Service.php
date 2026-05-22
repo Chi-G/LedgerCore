@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class Service extends Model
 {
@@ -71,7 +71,7 @@ class Service extends Model
 
     public function getFormattedFeaturesAttribute()
     {
-        if (!$this->features) {
+        if (! $this->features) {
             return [];
         }
 
@@ -80,7 +80,7 @@ class Service extends Model
 
     public function getFormattedTechStackAttribute()
     {
-        if (!$this->tech_stack) {
+        if (! $this->tech_stack) {
             return [];
         }
 

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class Testimonial extends Model
 {
@@ -89,16 +89,18 @@ class Testimonial extends Model
     {
         $fullStars = floor($this->rating);
         $halfStar = ($this->rating - $fullStars) >= 0.5;
-        
+
         $stars = str_repeat('★', $fullStars);
-        if ($halfStar) $stars .= '☆';
-        
+        if ($halfStar) {
+            $stars .= '☆';
+        }
+
         return $stars;
     }
 
     public function getFormattedMetricsAttribute()
     {
-        if (!$this->metrics) {
+        if (! $this->metrics) {
             return [];
         }
 

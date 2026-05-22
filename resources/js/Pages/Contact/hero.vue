@@ -68,7 +68,7 @@
                     </svg>
                     <span>Call Now</span>
                 </a>
-                <a href="mailto:biz@forahia.org.ng?subject=Digital Transformation Inquiry&body=Hello Forahia Team,%0D%0A%0D%0AI am interested in learning more about your digital transformation services.%0D%0A%0D%0APlease provide more information about:%0D%0A- Project scope and timeline%0D%0A- Pricing and packages%0D%0A- Next steps%0D%0A%0D%0AThank you!" class="btn-secondary text-lg px-8 py-4 hover-lift flex items-center justify-center space-x-2 hover:text-blue-400 hover:border-blue-400 transition-all duration-300">
+                <a href="mailto:info@forahia.com?subject=Digital Transformation Inquiry&body=Hello Forahia Team,%0D%0A%0D%0AI am interested in learning more about your digital transformation services.%0D%0A%0D%0APlease provide more information about:%0D%0A- Project scope and timeline%0D%0A- Pricing and packages%0D%0A- Next steps%0D%0A%0D%0AThank you!" class="btn-secondary text-lg px-8 py-4 hover-lift flex items-center justify-center space-x-2 hover:text-blue-400 hover:border-blue-400 transition-all duration-300">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
