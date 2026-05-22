@@ -69,9 +69,9 @@ const props = defineProps({
 // Add 'Forahia' suffix to title if not already included
 const fullTitle = computed(() => {
     if (props.title && !props.title.includes('Forahia')) {
-        return `${props.title} | Forahia Enterprises`;
+        return `${props.title} | Forahia Solutions`;
     }
-    return props.title || 'Forahia Enterprises - Digital Innovation Consultancy';
+    return props.title || 'Forahia Solutions - Digital Innovation Consultancy';
 });
 
 // Compute canonical URL

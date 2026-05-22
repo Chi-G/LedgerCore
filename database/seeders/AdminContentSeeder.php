@@ -165,7 +165,7 @@ class AdminContentSeeder extends Seeder
             'client_name' => 'Sarah Johnson',
             'client_title' => 'CEO',
             'company_name' => 'PropTech Solutions',
-            'testimonial' => 'Forahia Enterprises delivered an exceptional real estate platform that exceeded our expectations. The team\'s attention to detail and technical expertise helped us increase our property listings by 300% within six months.',
+            'testimonial' => 'Forahia Solutions delivered an exceptional real estate platform that exceeded our expectations. The team\'s attention to detail and technical expertise helped us increase our property listings by 300% within six months.',
             'client_image' => 'testimonials/clients/sarah-johnson.jpg',
             'company_logo' => 'testimonials/companies/proptech-logo.png',
             'metrics' => [
@@ -203,7 +203,7 @@ class AdminContentSeeder extends Seeder
         CompanySetting::create([
             'key' => 'company_name',
             'label' => 'Company Name',
-            'value' => 'Forahia Enterprises',
+            'value' => 'Forahia Solutions',
             'type' => 'text',
             'description' => 'Company name displayed across the website',
             'group' => 'general',

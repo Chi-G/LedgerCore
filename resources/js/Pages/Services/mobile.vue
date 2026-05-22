@@ -196,7 +196,7 @@ onMounted(() => {
     document.addEventListener('copy', function(e) {
         if (e.target && (e.target.classList.contains('protected-image') ||
                          e.target.closest('.protected-image-container'))) {
-            e.clipboardData.setData('text/plain', 'Image protected by Forahia Enterprises');
+            e.clipboardData.setData('text/plain', 'Image protected by Forahia Solutions');
             e.preventDefault();
         }
     });

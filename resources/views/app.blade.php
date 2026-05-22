@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Forahia Enterprise - Innovative Tech Solutions</title>
-    <meta name="description" content="Forahia Enterprise offers cutting-edge software development, web design, mobile app development, digital transformation, and IT consulting services to businesses across Nigeria and beyond.">
-    <meta name="keywords" content="forahia, Forahia Enterprise, tech services, software development, web design, mobile app development, digital transformation, IT consulting, Nigeria tech company">
+    <title>Forahia Solutions - Innovative Tech Solutions</title>
+    <meta name="description" content="Forahia Solutions offers cutting-edge software development, web design, mobile app development, digital transformation, and IT consulting services to businesses across Nigeria and beyond.">
+    <meta name="keywords" content="forahia, Forahia Solutions, tech services, software development, web design, mobile app development, digital transformation, IT consulting, Nigeria tech company">
 
     <link rel="canonical" href="https://forahia.com">
 

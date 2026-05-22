@@ -7,7 +7,7 @@ This document outlines a comprehensive SEO strategy to improve Forahia's search 
 
 ### Primary Keywords:
 - forahia
-- forahia enterprises
+- Forahia Solutions
 - digital innovation consultancy
 - business transformation consultancy
 
@@ -26,14 +26,14 @@ This document outlines a comprehensive SEO strategy to improve Forahia's search 
 ## On-Page SEO Implementation
 
 ### 1. Title Tags Optimization
-- Homepage: "Forahia Enterprises | Digital Innovation Consultancy"
-- Services: "Digital Transformation Services | Forahia Enterprises"
-- Portfolio: "Our Work & Case Studies | Forahia Enterprises"
+- Homepage: "Forahia Solutions | Digital Innovation Consultancy"
+- Services: "Digital Transformation Services | Forahia Solutions"
+- Portfolio: "Our Work & Case Studies | Forahia Solutions"
 - About: "About Forahia | Digital Innovation Experts"
-- Contact: "Contact Forahia Enterprises | Get in Touch"
+- Contact: "Contact Forahia Solutions | Get in Touch"
 
 ### 2. Meta Descriptions
-- Homepage: "Forahia Enterprises delivers world-class digital innovation solutions that transform businesses. Contact us today to start your digital transformation journey."
+- Homepage: "Forahia Solutions delivers world-class digital innovation solutions that transform businesses. Contact us today to start your digital transformation journey."
 - Services: "Explore Forahia's comprehensive digital transformation services including web development, software solutions, and business consulting."
 - Portfolio: "See how Forahia has helped businesses achieve digital transformation through innovative solutions and expert consulting."
 
