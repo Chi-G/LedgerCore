@@ -46,6 +46,7 @@ jobs:
           script: |
             cd /home/forahiao/public_html/forahia.com
             rm -rf vendor
+            rm -rf public/build
             rm -f config/*.php
             rm -f bootstrap/cache/*.php
 
@@ -79,6 +80,8 @@ jobs:
             rm -f bootstrap/cache/*.php
             php artisan config:clear
             php artisan cache:clear
+            php artisan view:clear
+            php artisan route:clear
             # Explicitly delete sqlite db if it exists to avoid accidental use and conflicts
             rm -f database/database.sqlite
             php artisan migrate --force
