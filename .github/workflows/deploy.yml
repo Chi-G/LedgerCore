@@ -1,4 +1,4 @@
-name: Deploy to WhoGoHost
+name: Deploy to Hostinger
 
 on:
   push:
@@ -39,10 +39,10 @@ jobs:
       - name: Pre-Deployment Cleanup
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.WHOGOHOST_SSH_HOST }}
-          username: ${{ secrets.WHOGOHOST_SSH_USER }}
+          host: ${{ secrets.HOSTINGER_SSH_HOST }}
+          username: ${{ secrets.HOSTINGER_SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.WHOGOHOST_SSH_PORT }}
+          port: ${{ secrets.HOSTINGER_SSH_PORT }}
           script: |
             cd /home/u157985566/domains/forahia.com/public_html
             rm -rf vendor
@@ -60,18 +60,18 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.WHOGOHOST_SSH_HOST }}
-          REMOTE_USER: ${{ secrets.WHOGOHOST_SSH_USER }}
-          REMOTE_PORT: ${{ secrets.WHOGOHOST_SSH_PORT }}
+          REMOTE_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          REMOTE_USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          REMOTE_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
           SOURCE: "."
           TARGET: "/home/u157985566/domains/forahia.com/public_html/"
       - name: Execute Post-Deployment Commands
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.WHOGOHOST_SSH_HOST }}
-          username: ${{ secrets.WHOGOHOST_SSH_USER }}
+          host: ${{ secrets.HOSTINGER_SSH_HOST }}
+          username: ${{ secrets.HOSTINGER_SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.WHOGOHOST_SSH_PORT }}
+          port: ${{ secrets.HOSTINGER_SSH_PORT }}
           script: |
             cd /home/u157985566/domains/forahia.com/public_html
             rm -f bootstrap/cache/*.php
