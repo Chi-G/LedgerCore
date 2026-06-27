@@ -14,15 +14,9 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'firstName' => 'required|string|max:255',
-            'lastName' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'company' => 'required|string|max:255',
-            'position' => 'nullable|string|max:255',
-            'projectType' => 'required|string|in:web-development,mobile-app,ui-ux-design,business-intelligence,digital-transformation,consultation,other',
-            'budget' => 'nullable|string|in:under-5k,5k-15k,15k-50k,50k-100k,over-100k,discuss',
-            'timeline' => 'nullable|string|in:asap,1-3-months,3-6-months,6-12-months,flexible',
+            'subject' => 'required|string|max:255',
             'message' => 'required|string|max:2000',
         ]);
 
@@ -30,18 +24,22 @@ class ContactController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
+        $nameParts = explode(' ', $request->name, 2);
+        $firstName = $nameParts[0];
+        $lastName = $nameParts[1] ?? 'N/A';
+
         try {
             $contact = Contact::create([
-                'first_name' => $request->firstName,
-                'last_name' => $request->lastName,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
                 'email' => $request->email,
-                'phone' => $request->phone,
-                'company' => $request->company,
-                'position' => $request->position,
-                'project_type' => $request->projectType,
-                'budget' => $request->budget,
-                'timeline' => $request->timeline,
-                'message' => $request->message,
+                'phone' => null,
+                'company' => 'Not Provided',
+                'position' => null,
+                'project_type' => 'other',
+                'budget' => null,
+                'timeline' => null,
+                'message' => "SUBJECT: " . $request->subject . "\n\n" . $request->message,
                 'status' => 'new',
             ]);
 

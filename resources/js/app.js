@@ -25,6 +25,8 @@ if ('connection' in navigator) {
   }
 }
 
+import { MotionPlugin } from '@vueuse/motion'
+
 createInertiaApp({
   resolve: name => {
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
@@ -34,6 +36,7 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     const app = createApp({ render: () => h(App, props) })
     app.use(plugin)
+    app.use(MotionPlugin)
     app.mount(el)
   },
 

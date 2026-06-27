@@ -223,7 +223,7 @@ class AdminContentSeeder extends Seeder
         CompanySetting::create([
             'key' => 'contact_email',
             'label' => 'Contact Email',
-            'value' => 'hello@forahia.com',
+            'value' => 'info@forahia.com',
             'type' => 'text',
             'description' => 'Primary contact email address',
             'group' => 'contact',
