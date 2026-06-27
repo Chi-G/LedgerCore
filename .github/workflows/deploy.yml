@@ -56,18 +56,15 @@ jobs:
           # Also remove storage logs but keep the directory
           rm -rf storage/logs/*.log
 
-      - name: Deploy to Server via SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.WHOGOHOST_SSH_HOST }}
-          username: ${{ secrets.WHOGOHOST_SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.WHOGOHOST_SSH_PORT }}
-          source: "."
-          target: "/home/u157985566/domains/forahia.com/public_html/"
-          rm: false
-          strip_components: 0
-
+      - name: Deploy to Server via Rsync
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.WHOGOHOST_SSH_HOST }}
+          REMOTE_USER: ${{ secrets.WHOGOHOST_SSH_USER }}
+          REMOTE_PORT: ${{ secrets.WHOGOHOST_SSH_PORT }}
+          SOURCE: "."
+          TARGET: "/home/u157985566/domains/forahia.com/public_html/"
       - name: Execute Post-Deployment Commands
         uses: appleboy/ssh-action@master
         with:
