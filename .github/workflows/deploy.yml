@@ -44,7 +44,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.WHOGOHOST_SSH_PORT }}
           script: |
-            cd /home/forahiao/public_html/forahia.com
+            cd /home/u157985566/domains/forahia.com/public_html
             rm -rf vendor
             rm -rf public/build
             rm -f config/*.php
@@ -64,7 +64,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.WHOGOHOST_SSH_PORT }}
           source: "."
-          target: "/home/forahiao/public_html/forahia.com/"
+          target: "/home/u157985566/domains/forahia.com/public_html/"
           rm: false
           strip_components: 0
 
@@ -76,7 +76,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.WHOGOHOST_SSH_PORT }}
           script: |
-            cd /home/forahiao/public_html/forahia.com
+            cd /home/u157985566/domains/forahia.com/public_html
             rm -f bootstrap/cache/*.php
             php artisan config:clear
             php artisan cache:clear
