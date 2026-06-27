@@ -165,7 +165,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('contact.store'), {
+    form.post('/contact', {
         preserveScroll: true,
         onSuccess: () => form.reset(),
     });
