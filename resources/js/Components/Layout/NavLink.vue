@@ -2,18 +2,14 @@
     <Link
         :href="href"
         :class="linkClasses"
-        :style="isActive ? { color: accentColor } : {}"
     >
         <slot />
     </Link>
 </template>
 
 <script setup>
-
 import { computed } from 'vue'
 import { Link, usePage } from '@inertiajs/vue3'
-// Set your accent color here to match your Tailwind config
-const accentColor = '#109db9' // matches --color-accent in your CSS
 
 const props = defineProps({
     href: {
@@ -33,7 +29,7 @@ const props = defineProps({
 const page = usePage()
 
 const isActive = computed(() => {
-    const currentUrl = page.url.value || page.url
+    const currentUrl = page.url || '/'
     // Exact match for home, startsWith for other routes
     return currentUrl === props.href || (props.href !== '/' && currentUrl.startsWith(props.href))
 })
@@ -43,16 +39,15 @@ const linkClasses = computed(() => {
 
     if (props.isButton) {
         base = props.isMobile
-            ? 'block py-2 text-accent font-medium'
+            ? 'block py-2 font-medium ' + (isActive.value ? 'text-primary-blue' : 'text-text-secondary hover:text-text-primary')
             : 'btn-primary'
     } else {
+        const desktopActiveIndicator = 'relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary-blue after:rounded-full'
         base = props.isMobile
-            ? 'block py-2 text-gray-300 hover:text-accent transition-colors'
-            : 'text-gray-300 hover:text-accent transition-colors font-medium'
+            ? `block py-2 transition-colors font-medium ${isActive.value ? 'text-primary-blue font-bold' : 'text-text-secondary hover:text-text-primary'}`
+            : `transition-colors font-medium ${isActive.value ? 'text-primary-blue ' + desktopActiveIndicator : 'text-text-secondary hover:text-text-primary'}`
     }
 
-    const activeClass = isActive.value ? 'font-medium' : ''
-
-    return [base, activeClass].filter(Boolean).join(' ')
+    return base
 })
 </script>

@@ -27,9 +27,9 @@
             :type="type"
         />
 
-        <div class="bg-primary text-background antialiased">
+        <div class="min-h-screen flex flex-col bg-bg-base text-text-primary antialiased font-sans">
             <Header />
-            <main class="overflow-visible">
+            <main class="flex-grow">
                 <slot />
             </main>
             <Footer />
