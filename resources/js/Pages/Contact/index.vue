@@ -232,8 +232,11 @@
                                     <span v-else>Send Message</span>
                                 </button>
                                 
-                                <div v-if="showSuccessMessage" class="p-4 bg-green-500/10 border border-green-500/30 rounded-md text-green-400 text-sm mt-4 text-center transition-all duration-500">
+                                <div v-if="showSuccessMessage && !($page.props.flash && $page.props.flash.error)" class="p-4 bg-green-500/10 border border-green-500/30 rounded-md text-green-400 text-sm mt-4 text-center transition-all duration-500">
                                     Message received. We'll respond within 24 hours.
+                                </div>
+                                <div v-if="$page.props.flash && $page.props.flash.error" class="p-4 bg-red-500/10 border border-red-500/30 rounded-md text-red-400 text-sm mt-4 text-center transition-all duration-500">
+                                    {{ $page.props.flash.error }}
                                 </div>
                             </form>
                         </div>
@@ -246,7 +249,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import MainLayout from '../../Components/Layout/MainLayout.vue';
 
 const showSuccessMessage = ref(false);
@@ -267,12 +270,16 @@ const form = useForm({
 const submit = () => {
     form.post('/contact', {
         preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-            showSuccessMessage.value = true;
-            setTimeout(() => {
+        onSuccess: (page) => {
+            if (page.props.flash && page.props.flash.error) {
                 showSuccessMessage.value = false;
-            }, 8000);
+            } else {
+                form.reset();
+                showSuccessMessage.value = true;
+                setTimeout(() => {
+                    showSuccessMessage.value = false;
+                }, 8000);
+            }
         },
     });
 };
