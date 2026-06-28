@@ -16,8 +16,14 @@ class ContactController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:50',
+            'company' => 'nullable|string|max:255',
+            'position' => 'nullable|string|max:255',
+            'project_type' => 'required|string|max:255',
+            'budget' => 'nullable|string|max:255',
+            'timeline' => 'nullable|string|max:255',
             'subject' => 'required|string|max:255',
-            'message' => 'required|string|max:2000',
+            'message' => 'required|string|max:5000',
         ]);
 
         if ($validator->fails()) {
@@ -33,12 +39,12 @@ class ContactController extends Controller
                 'first_name' => $firstName,
                 'last_name' => $lastName,
                 'email' => $request->email,
-                'phone' => null,
-                'company' => 'Not Provided',
-                'position' => null,
-                'project_type' => 'other',
-                'budget' => null,
-                'timeline' => null,
+                'phone' => $request->phone,
+                'company' => $request->company ?: 'Not Provided',
+                'position' => $request->position,
+                'project_type' => $request->project_type,
+                'budget' => $request->budget,
+                'timeline' => $request->timeline,
                 'message' => "SUBJECT: " . $request->subject . "\n\n" . $request->message,
                 'status' => 'new',
             ]);
