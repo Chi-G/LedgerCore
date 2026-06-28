@@ -166,10 +166,10 @@
                                             class="w-full bg-bg-base border border-border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-blue/50 focus:border-primary-blue transition-colors text-text-primary"
                                         >
                                             <option value="" disabled>Select Budget</option>
-                                            <option value="< $5k">&lt; $5k</option>
-                                            <option value="$5k - $10k">$5k - $10k</option>
-                                            <option value="$10k - $25k">$10k - $25k</option>
-                                            <option value="$25k+">$25k+</option>
+                                            <option value="< ₦1.5M">&lt; ₦1.5M</option>
+                                            <option value="₦2M - ₦5M">₦2M - ₦5M</option>
+                                            <option value="₦5M - ₦15M">₦5M - ₦15M</option>
+                                            <option value="₦15M+">₦15M+</option>
                                             <option value="Not Sure">Not Sure</option>
                                         </select>
                                         <div v-if="form.errors.budget" class="text-red-500 text-xs">{{ form.errors.budget }}</div>
