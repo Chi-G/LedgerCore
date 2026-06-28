@@ -100,8 +100,99 @@
                                     </div>
                                 </div>
                                 
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label for="phone" class="text-sm font-medium text-text-secondary">Phone Number</label>
+                                        <input 
+                                            id="phone"
+                                            v-model="form.phone"
+                                            type="tel" 
+                                            class="w-full bg-bg-base border border-border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-blue/50 focus:border-primary-blue transition-colors text-text-primary"
+                                            placeholder="+1 (555) 000-0000"
+                                        >
+                                        <div v-if="form.errors.phone" class="text-red-500 text-xs">{{ form.errors.phone }}</div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="company" class="text-sm font-medium text-text-secondary">Company</label>
+                                        <input 
+                                            id="company"
+                                            v-model="form.company"
+                                            type="text" 
+                                            class="w-full bg-bg-base border border-border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-blue/50 focus:border-primary-blue transition-colors text-text-primary"
+                                            placeholder="Company Name"
+                                        >
+                                        <div v-if="form.errors.company" class="text-red-500 text-xs">{{ form.errors.company }}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label for="position" class="text-sm font-medium text-text-secondary">Position</label>
+                                        <input 
+                                            id="position"
+                                            v-model="form.position"
+                                            type="text" 
+                                            class="w-full bg-bg-base border border-border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-blue/50 focus:border-primary-blue transition-colors text-text-primary"
+                                            placeholder="e.g. CEO, CTO, Manager"
+                                        >
+                                        <div v-if="form.errors.position" class="text-red-500 text-xs">{{ form.errors.position }}</div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="project_type" class="text-sm font-medium text-text-secondary">Project Type</label>
+                                        <select 
+                                            id="project_type"
+                                            v-model="form.project_type"
+                                            class="w-full bg-bg-base border border-border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-blue/50 focus:border-primary-blue transition-colors text-text-primary"
+                                            required
+                                        >
+                                            <option value="" disabled>Select Project Type</option>
+                                            <option value="Web Development">Web Development</option>
+                                            <option value="Mobile App">Mobile App</option>
+                                            <option value="UI/UX Design">UI/UX Design</option>
+                                            <option value="Cloud Architecture">Cloud Architecture</option>
+                                            <option value="IT Consulting">IT Consulting</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <div v-if="form.errors.project_type" class="text-red-500 text-xs">{{ form.errors.project_type }}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label for="budget" class="text-sm font-medium text-text-secondary">Budget Range</label>
+                                        <select 
+                                            id="budget"
+                                            v-model="form.budget"
+                                            class="w-full bg-bg-base border border-border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-blue/50 focus:border-primary-blue transition-colors text-text-primary"
+                                        >
+                                            <option value="" disabled>Select Budget</option>
+                                            <option value="< $5k">&lt; $5k</option>
+                                            <option value="$5k - $10k">$5k - $10k</option>
+                                            <option value="$10k - $25k">$10k - $25k</option>
+                                            <option value="$25k+">$25k+</option>
+                                            <option value="Not Sure">Not Sure</option>
+                                        </select>
+                                        <div v-if="form.errors.budget" class="text-red-500 text-xs">{{ form.errors.budget }}</div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="timeline" class="text-sm font-medium text-text-secondary">Timeline</label>
+                                        <select 
+                                            id="timeline"
+                                            v-model="form.timeline"
+                                            class="w-full bg-bg-base border border-border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-blue/50 focus:border-primary-blue transition-colors text-text-primary"
+                                        >
+                                            <option value="" disabled>Select Timeline</option>
+                                            <option value="ASAP">ASAP</option>
+                                            <option value="1-3 Months">1-3 Months</option>
+                                            <option value="3-6 Months">3-6 Months</option>
+                                            <option value="6+ Months">6+ Months</option>
+                                        </select>
+                                        <div v-if="form.errors.timeline" class="text-red-500 text-xs">{{ form.errors.timeline }}</div>
+                                    </div>
+                                </div>
+                                
                                 <div class="space-y-2">
-                                    <label for="subject" class="text-sm font-medium text-text-secondary">Subject / Project Type</label>
+                                    <label for="subject" class="text-sm font-medium text-text-secondary">Subject</label>
                                     <input 
                                         id="subject"
                                         v-model="form.subject"
@@ -160,6 +251,12 @@ import MainLayout from '../../Components/Layout/MainLayout.vue';
 const form = useForm({
     name: '',
     email: '',
+    phone: '',
+    company: '',
+    position: '',
+    project_type: '',
+    budget: '',
+    timeline: '',
     subject: '',
     message: ''
 });
