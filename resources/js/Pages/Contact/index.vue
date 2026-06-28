@@ -227,12 +227,12 @@
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                         </svg>
-                                        Transmitting...
+                                        Sending...
                                     </span>
                                     <span v-else>Send Message</span>
                                 </button>
                                 
-                                <div v-if="form.recentlySuccessful" class="p-4 bg-green-500/10 border border-green-500/30 rounded-md text-green-400 text-sm mt-4 text-center">
+                                <div v-if="showSuccessMessage" class="p-4 bg-green-500/10 border border-green-500/30 rounded-md text-green-400 text-sm mt-4 text-center transition-all duration-500">
                                     Message received. We'll respond within 24 hours.
                                 </div>
                             </form>
@@ -245,8 +245,11 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import MainLayout from '../../Components/Layout/MainLayout.vue';
+
+const showSuccessMessage = ref(false);
 
 const form = useForm({
     name: '',
@@ -264,7 +267,13 @@ const form = useForm({
 const submit = () => {
     form.post('/contact', {
         preserveScroll: true,
-        onSuccess: () => form.reset(),
+        onSuccess: () => {
+            form.reset();
+            showSuccessMessage.value = true;
+            setTimeout(() => {
+                showSuccessMessage.value = false;
+            }, 8000);
+        },
     });
 };
 </script>
