@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "select_type": "SIMPLE",
+        "table": "ledger_entries",
+        "partitions": null,
+        "type": "ref",
+        "possible_keys": "ledger_entries_account_id_created_at_index",
+        "key": "ledger_entries_account_id_created_at_index",
+        "key_len": "8",
+        "ref": "const",
+        "rows": 99528,
+        "filtered": 100,
+        "Extra": "Backward index scan"
+    }
+]
