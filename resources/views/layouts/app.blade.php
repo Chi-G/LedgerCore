@@ -92,6 +92,11 @@
                 </div>
             </div>
             
+            <a href="{{ route('sessions.index') }}" class="flex items-center gap-2 px-3 py-2 rounded text-[12.5px] text-muted border border-transparent hover:bg-white/5 hover:text-paper transition-colors w-full justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                Security & Sessions
+            </a>
+
             <button @click="showLogoutModal = true" class="flex items-center gap-2 px-3 py-2 rounded text-[12.5px] text-ledger-rust border border-ledger-rust/20 hover:bg-ledger-rust/10 transition-colors w-full justify-center group">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:-translate-x-0.5 transition-transform"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                 Secure Logout

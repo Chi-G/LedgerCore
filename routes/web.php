@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/statements', [StatementController::class, 'index'])->name('statements.index');
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/audit', [AuditController::class, 'index'])->name('audit.index');
+    Route::get('/settings/sessions', [\App\Http\Controllers\SessionController::class, 'index'])->name('sessions.index');
+    Route::delete('/settings/sessions/{id}', [\App\Http\Controllers\SessionController::class, 'destroy'])->name('sessions.destroy');
 });
 
 // teller Dashboard
