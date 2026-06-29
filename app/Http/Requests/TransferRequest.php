@@ -14,10 +14,10 @@ class TransferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'from_account_id' => ['required', 'exists:accounts,id'],
-            'to_account_id' => ['required', 'exists:accounts,id', 'different:from_account_id'],
+            'source_account' => ['required', 'string', 'exists:accounts,account_number'],
+            'destination_account' => ['required', 'string', 'exists:accounts,account_number', 'different:source_account'],
             'amount' => ['required', 'numeric', 'min:0.01'],
-            'reference' => ['required', 'string', 'unique:ledger_entries,reference'],
+            'reference' => ['nullable', 'string', 'unique:ledger_entries,reference'],
         ];
     }
 }
