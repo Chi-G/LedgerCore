@@ -10,6 +10,10 @@ class StatementController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
+
+        if ($user->role === 'teller') {
+            abort(403, 'Unauthorized access.');
+        }
         
         // Allowed accounts for dropdown
         if (in_array($user->role, ['auditor', 'manager'])) {
@@ -23,7 +27,7 @@ class StatementController extends Controller
         $selectedAccount = $accountId ? $accounts->firstWhere('id', $accountId) : $accounts->first();
 
         if (!$selectedAccount) {
-            return view('statements.index', ['entries' => collect(), 'accounts' => $accounts, 'selectedAccount' => null]);
+            return view('statements.index', ['entries' => new \Illuminate\Pagination\LengthAwarePaginator([], 0, 5), 'accounts' => $accounts, 'selectedAccount' => null]);
         }
 
         // If they requested an account they don't have access to

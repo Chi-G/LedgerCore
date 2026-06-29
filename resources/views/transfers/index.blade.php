@@ -5,8 +5,12 @@
 @section('content')
     <header class="flex justify-between items-end mb-8 border-b border-ink/10 pb-4">
         <div>
-            <h1 class="font-display font-medium text-3xl tracking-tight">Execute Transfer</h1>
-            <p class="text-muted mt-1 text-[13.5px]">Move funds securely between ledger accounts.</p>
+            <h1 class="font-display font-medium text-3xl tracking-tight">
+                {{ isset($isTeller) && $isTeller ? 'Process Deposit' : 'Execute Transfer' }}
+            </h1>
+            <p class="text-muted mt-1 text-[13.5px]">
+                {{ isset($isTeller) && $isTeller ? 'Credit funds directly into a customer account.' : 'Move funds securely between ledger accounts.' }}
+            </p>
         </div>
     </header>
 
@@ -29,29 +33,31 @@
             </div>
         @endif
 
-        <form action="{{ route('transfers.store') }}" method="POST" class="space-y-8" x-data="{ submitting: false }"
+        <form action="{{ isset($isTeller) && $isTeller ? route('teller.transfers.store') : route('transfers.store') }}" method="POST" class="space-y-8" x-data="{ submitting: false }"
             @submit="submitting = true">
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Source Account -->
-                <div>
-                    <label for="source_account"
-                        class="block font-mono text-xs uppercase tracking-widest text-ink/80 mb-2">Source Account</label>
-                    <select id="source_account" name="source_account" required
-                        class="w-full bg-paper border border-ink/10 text-ink py-2.5 px-3 focus:outline-none focus:border-brass focus:ring-1 focus:ring-brass transition-colors font-mono text-sm placeholder:text-[9.5px] md:placeholder:text-sm">
-                        <option value="">Select Account...</option>
-                        @foreach ($accounts as $account)
-                            <option value="{{ $account->account_number }}"
-                                {{ old('source_account', $accounts->count() === 1 ? $accounts->first()->account_number : '') == $account->account_number ? 'selected' : '' }}>
-                                {{ $account->account_number }} (₦{{ number_format($account->balance(), 2) }})
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                @if(!isset($isTeller) || !$isTeller)
+                    <div>
+                        <label for="source_account"
+                            class="block font-mono text-xs uppercase tracking-widest text-ink/80 mb-2">Source Account</label>
+                        <select id="source_account" name="source_account" required
+                            class="w-full bg-paper border border-ink/10 text-ink py-2.5 px-3 focus:outline-none focus:border-brass focus:ring-1 focus:ring-brass transition-colors font-mono text-sm placeholder:text-[9.5px] md:placeholder:text-sm">
+                            <option value="">Select Account...</option>
+                            @foreach ($accounts as $account)
+                                <option value="{{ $account->account_number }}"
+                                    {{ old('source_account', $accounts->count() === 1 ? $accounts->first()->account_number : '') == $account->account_number ? 'selected' : '' }}>
+                                    {{ $account->account_number }} (₦{{ number_format($account->balance(), 2) }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
 
                 <!-- Destination Account -->
-                <div>
+                <div class="{{ isset($isTeller) && $isTeller ? 'md:col-span-2' : '' }}">
                     <label for="destination_account"
                         class="block font-mono text-xs uppercase tracking-widest text-ink/80 mb-2">Destination Account
                         (Manual)</label>
@@ -87,7 +93,7 @@
                 <button type="submit" :disabled="submitting" :class="submitting ? 'opacity-80 cursor-not-allowed' : ''"
                     class="bg-brass hover:bg-brass-soft text-ink font-mono font-medium py-3 px-8 uppercase tracking-widest text-sm transition-colors flex items-center justify-center gap-2 min-w-[240px]">
 
-                    <span x-show="!submitting">Authorize Transfer</span>
+                    <span x-show="!submitting">{{ isset($isTeller) && $isTeller ? 'Process Deposit' : 'Authorize Transfer' }}</span>
 
                     <span x-show="submitting" class="flex items-center gap-2" style="display: none;">
                         <svg class="animate-spin h-4 w-4 text-ink" xmlns="http://www.w3.org/2000/svg" fill="none"

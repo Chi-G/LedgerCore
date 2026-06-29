@@ -35,4 +35,17 @@ class LedgerService
             ]);
         });
     }
+
+    public function recordDeposit(Account $to, float $amount, string $reference): void
+    {
+        DB::transaction(function () use ($to, $amount, $reference) {
+            LedgerEntry::create([
+                'account_id' => $to->id,
+                'direction' => 'credit',
+                'amount' => $amount,
+                'type' => 'deposit',
+                'reference' => $reference,
+            ]);
+        });
+    }
 }

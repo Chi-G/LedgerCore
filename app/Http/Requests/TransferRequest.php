@@ -13,9 +13,16 @@ class TransferRequest extends FormRequest
 
     public function rules(): array
     {
+        $isTeller = $this->user() && $this->user()->role === 'teller';
+
         return [
-            'source_account' => ['required', 'string', 'exists:accounts,account_number'],
-            'destination_account' => ['required', 'string', 'exists:accounts,account_number', 'different:source_account'],
+            'source_account' => $isTeller ? ['nullable'] : ['required', 'string', 'exists:accounts,account_number'],
+            'destination_account' => array_filter([
+                'required', 
+                'string', 
+                'exists:accounts,account_number', 
+                $isTeller ? '' : 'different:source_account'
+            ]),
             'amount' => ['required', 'numeric', 'min:0.01'],
             'reference' => ['nullable', 'string', 'unique:ledger_entries,reference'],
         ];

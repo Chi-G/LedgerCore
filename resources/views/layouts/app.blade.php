@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -24,7 +26,7 @@
          x-transition:leave="transition-opacity ease-linear duration-300"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-20 bg-ink/80 backdrop-blur-sm md:hidden" 
+         class="fixed inset-0 z-20 bg-ink/80 backdrop-blur-sm md:hidden"
          @click="sidebarOpen = false" 
          style="display: none;"></div>
 
@@ -46,12 +48,17 @@
         <nav class="flex flex-col gap-1">
             @php
                 $role = auth()->user()->role ?? 'customer';
+                $prefix = $role === 'teller' ? 'teller.' : '';
+
                 $links = [
-                    ['label' => 'Overview', 'route' => 'dashboard'],
-                    ['label' => 'Accounts', 'route' => 'accounts.index'],
-                    ['label' => 'Transfers', 'route' => 'transfers.index'],
-                    ['label' => 'Statements', 'route' => 'statements.index'],
+                    ['label' => 'Overview', 'route' => $prefix . 'dashboard'],
+                    ['label' => 'Accounts', 'route' => $prefix . 'accounts.index'],
+                    ['label' => 'Transfers', 'route' => $prefix . 'transfers.index'],
                 ];
+                
+                if ($role !== 'teller') {
+                    $links[] = ['label' => 'Statements', 'route' => 'statements.index'];
+                }
                 
                 if (in_array($role, ['auditor', 'manager'])) {
                     $links[] = ['label' => 'Reports', 'route' => 'reports.index'];

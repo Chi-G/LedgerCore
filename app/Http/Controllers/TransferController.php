@@ -13,40 +13,46 @@ class TransferController extends Controller
 {
     public function index(Request $request)
     {
-        $accounts = $request->user()->accounts;
-        return view('transfers.index', compact('accounts'));
+        $user = $request->user();
+        $accounts = $user->accounts;
+        $isTeller = $user->role === 'teller';
+        return view('transfers.index', compact('accounts', 'isTeller'));
     }
 
     public function store(TransferRequest $request, LedgerService $ledgerService)
     {
-        // TransferRequest already validates that the source belongs to user,
-        // and destination exists, but let's double check destination if needed.
-        // Actually, the user asked for manual entry. Let's see what TransferRequest requires.
-        
-        $fromAccount = Account::where('user_id', $request->user()->id)
-                              ->where('account_number', $request->source_account)
-                              ->firstOrFail();
-
+        $isTeller = $request->user()->role === 'teller';
         $toAccount = Account::where('account_number', $request->destination_account)->firstOrFail();
+        $reference = $request->input('reference') ?? ($isTeller ? 'DEP-' : 'TRF-') . strtoupper(Str::random(8));
 
-        $reference = $request->input('reference') ?? 'TRF-' . strtoupper(Str::random(8));
-
-        // Simulate network/processing delay to show the spinner
+        // network/processing delay to show the spinner
         sleep(2);
 
         try {
-            $ledgerService->recordTransfer(
-                $fromAccount,
-                $toAccount,
-                (float) $request->amount,
-                $reference
-            );
+            if ($isTeller) {
+                $ledgerService->recordDeposit(
+                    $toAccount,
+                    (float) $request->amount,
+                    $reference
+                );
+                return redirect()->route('teller.transfers.index')->with('success', 'Deposit processed successfully.');
+            } else {
+                $fromAccount = Account::where('user_id', $request->user()->id)
+                                      ->where('account_number', $request->source_account)
+                                      ->firstOrFail();
+
+                $ledgerService->recordTransfer(
+                    $fromAccount,
+                    $toAccount,
+                    (float) $request->amount,
+                    $reference
+                );
+                return redirect()->route('transfers.index')->with('success', 'Transfer completed successfully.');
+            }
         } catch (InsufficientFundsException $e) {
             return back()->withErrors(['amount' => 'Insufficient funds in the source account.'])->withInput();
         } catch (\Exception $e) {
-            return back()->withErrors(['general' => 'Transfer failed. Please try again.'])->withInput();
+            return back()->withErrors(['general' => 'Transaction failed. Please try again.'])->withInput();
         }
-
-        return redirect()->route('transfers.index')->with('success', 'Transfer completed successfully.');
     }
 }

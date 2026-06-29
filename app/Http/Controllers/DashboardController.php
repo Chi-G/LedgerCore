@@ -14,7 +14,24 @@ class DashboardController extends Controller
         /** @var User $user */
         $user = $request->user();
         if (in_array($user->role, ['teller', 'auditor', 'manager'])) {
-            return redirect()->route('accounts.index');
+            $totalDeposits = \App\Models\LedgerEntry::where('direction', 'credit')
+                ->where('type', 'deposit')
+                ->whereDate('created_at', now()->toDateString())
+                ->sum('amount');
+
+            $totalWithdrawals = \App\Models\LedgerEntry::where('direction', 'debit')
+                ->where('type', 'withdrawal')
+                ->whereDate('created_at', now()->toDateString())
+                ->sum('amount');
+
+            $activeAccountsCount = \App\Models\Account::count();
+
+            $recentTransactions = \App\Models\LedgerEntry::with('account')
+                ->orderByDesc('created_at')
+                ->take(10)
+                ->get();
+
+            return view('staff.dashboard', compact('totalDeposits', 'totalWithdrawals', 'activeAccountsCount', 'recentTransactions'));
         }
 
         $account = $user->accounts()->first();
