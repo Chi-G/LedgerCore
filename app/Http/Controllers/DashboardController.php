@@ -33,7 +33,7 @@ class DashboardController extends Controller
             default => null,
         };
 
-        $entries = $entriesQuery->paginate(20);
+        $entries = $entriesQuery->paginate(5)->withQueryString();
 
         $monthlyCredits = $account->ledgerEntries()
             ->where('direction', 'credit')

@@ -19,7 +19,7 @@
 
     <!-- Filters -->
     <div class="bg-white border border-ink/10 p-6 mb-8 shadow-sm">
-        <form action="{{ route('statements.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+        <form action="{{ route('statements.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
             <div>
                 <label for="account" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Account</label>
                 <select name="account" id="account" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
@@ -102,10 +102,11 @@
                 </tbody>
             </table>
         </div>
-    </div>
-
-    <!-- Pagination -->
-    <div class="mt-6">
-        {{ $entries->links() }}
+        
+        @if ($entries->hasPages())
+            <div class="px-7 py-4 border-t border-ink/10 bg-[#FAFAFA]">
+                {{ $entries->links() }}
+            </div>
+        @endif
     </div>
 @endsection

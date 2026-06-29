@@ -12,12 +12,12 @@
             </div>
             <h1 class="font-display text-[28px] font-medium mt-1">Overview</h1>
         </div>
-        <div class="font-mono text-[11px] text-ink/80 text-right hidden md:block">
+        <div class="font-mono text-[11px] text-ink/80 text-right hidden lg:block">
             As of {{ now()->format('d M Y · H:i') }}
         </div>
     </div>
 
-    <div class="grid md:grid-cols-[1.3fr_1fr] gap-6 mb-7">
+    <div class="grid lg:grid-cols-[1.3fr_1fr] gap-6 mb-7">
 
         <x-balance-card :account="$account" :balance="$balance" />
 
@@ -57,14 +57,22 @@
         @endforelse
 
         <div class="px-7 py-4 flex justify-between items-center border-t border-[#E7E2D6]">
-            <span class="text-[11px] text-[#9C9486] font-mono">
+            <span class="text-[11px] text-[#9C9486] font-mono hidden lg:inline">
                 Showing {{ $entries->count() }} of {{ $entries->total() ?? $entries->count() }} entries
             </span>
-            <a href="{{ route('statements.index', ['account' => $account->id]) }}"
-                class="bg-brass text-ink rounded text-[12.5px] font-semibold px-4.5 py-2.5 hover:bg-brass-soft transition-colors">
-                View full statement
-            </a>
+            <div class="flex-1 lg:flex-none">
+                <a href="{{ route('statements.index', ['account' => $account->id]) }}"
+                    class="bg-brass text-ink rounded text-[12.5px] font-semibold px-4.5 py-2.5 hover:bg-brass-soft transition-colors w-full lg:w-auto text-center block lg:inline-block">
+                    View full statement
+                </a>
+            </div>
         </div>
+
+        @if ($entries->hasPages())
+            <div class="px-7 py-4 border-t border-[#E7E2D6] bg-[#FAFAFA]">
+                {{ $entries->links() }}
+            </div>
+        @endif
     </div>
 
 @endsection

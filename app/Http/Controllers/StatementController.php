@@ -45,7 +45,7 @@ class StatementController extends Controller
             $entriesQuery->where('type', $request->type);
         }
 
-        $entries = $entriesQuery->paginate(20);
+        $entries = $entriesQuery->paginate(5);
         
         // Preserve query parameters for pagination
         $entries->appends($request->all());
