@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         /** @var User $user */
         $user = $request->user();
-        if (in_array($user->role, ['teller', 'auditor', 'manager'])) {
+        if ($user->role === 'teller') {
             $totalDeposits = \App\Models\LedgerEntry::where('direction', 'credit')
                 ->where('type', 'deposit')
                 ->whereDate('created_at', now()->toDateString())
@@ -28,8 +28,7 @@ class DashboardController extends Controller
 
             $recentTransactions = \App\Models\LedgerEntry::with('account')
                 ->orderByDesc('created_at')
-                ->take(10)
-                ->get();
+                ->paginate(10);
 
             return view('staff.dashboard', compact('totalDeposits', 'totalWithdrawals', 'activeAccountsCount', 'recentTransactions'));
         }

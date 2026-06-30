@@ -10,6 +10,27 @@
         </div>
     </header>
 
+    @if(in_array(auth()->user()->role, ['teller', 'auditor', 'manager']))
+    <!-- Filters -->
+    <div class="bg-white border border-ink/10 p-6 mb-8 shadow-sm">
+        <form action="{{ route(request()->route()->getName(), request()->route()->parameters()) }}" method="GET" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
+            <div>
+                <label for="account_number" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Account Number</label>
+                <input type="text" name="account_number" id="account_number" value="{{ request('account_number') }}" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass" placeholder="Enter Account #">
+            </div>
+            <div>
+                <label for="account_name" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Account Name</label>
+                <input type="text" name="account_name" id="account_name" value="{{ request('account_name') }}" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass" placeholder="Search by name">
+            </div>
+            <div>
+                <button type="submit" class="w-full bg-brass hover:bg-brass-soft text-ink font-mono font-medium py-2 px-4 uppercase tracking-widest text-sm transition-colors cursor-pointer">
+                    Search Directory
+                </button>
+            </div>
+        </form>
+    </div>
+    @endif
+
     <div class="flex flex-col gap-6">
         @foreach($accounts as $account)
             <div class="relative bg-white border border-ink/10 p-7 shadow-sm flex flex-col justify-between group hover:shadow-md hover:border-brass/30 transition-all duration-300 overflow-hidden">
@@ -27,7 +48,7 @@
                             {{ implode(' ', str_split($account->account_number, 4)) }}
                         </div>
                     </div>
-                    @if(in_array(auth()->user()->role, ['auditor', 'manager']) && $account->user)
+                    @if(in_array(auth()->user()->role, ['teller', 'auditor', 'manager']) && $account->user)
                         <div class="text-[10px] text-ink/70 font-semibold uppercase tracking-wider bg-paper px-2.5 py-1.5 border border-ink/10 rounded">
                             {{ $account->user->name }}
                         </div>
@@ -45,9 +66,19 @@
                     <div class="text-[10px] text-ink/80 font-mono uppercase tracking-widest">
                         Status: <span class="text-ledger-green">Active</span>
                     </div>
-                    <a href="{{ route('statements.index', ['account' => $account->id]) }}" class="text-[11px] font-mono uppercase tracking-widest text-ink hover:text-brass transition-colors flex items-center gap-1 group-hover:gap-2">
-                        View Ledger <span>&rarr;</span>
-                    </a>
+                    @if(auth()->user()->role !== 'teller')
+                        @php
+                            $role = auth()->user()->role;
+                            $statementRoute = in_array($role, ['auditor', 'manager']) ? $role . '.statements.index' : 'statements.index';
+                            $statementParams = ['account_number' => $account->account_number];
+                            if ($role === 'customer' || !$role) {
+                                $statementParams['uuid'] = request()->route('uuid') ?? auth()->user()->uuid;
+                            }
+                        @endphp
+                        <a href="{{ route($statementRoute, $statementParams) }}" class="text-[11px] font-mono uppercase tracking-widest text-ink hover:text-brass transition-colors flex items-center gap-1 group-hover:gap-2">
+                            View Ledger <span>&rarr;</span>
+                        </a>
+                    @endif
                 </div>
             </div>
         @endforeach
@@ -61,6 +92,12 @@
                 </div>
                 <p class="text-ink font-medium">No accounts found</p>
                 <p class="text-muted text-sm mt-1">There are no ledger accounts registered in your directory.</p>
+            </div>
+        @endif
+        
+        @if(method_exists($accounts, 'links'))
+            <div class="mt-2">
+                {{ $accounts->links() }}
             </div>
         @endif
     </div>

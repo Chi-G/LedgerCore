@@ -38,7 +38,7 @@
                     Double-entry record · most recent first
                 </div>
             </div>
-            <form method="GET" action="{{ route('dashboard') }}">
+            <form method="GET" action="{{ route('dashboard', ['uuid' => auth()->user()->uuid]) }}">
                 <select name="range" onchange="this.form.submit()"
                     class="text-[11.5px] font-mono border border-[#D8D2C2] rounded-full px-3.5 py-1.5 bg-transparent">
                     <option value="month" {{ request('range', 'month') === 'month' ? 'selected' : '' }}>This month</option>
@@ -61,7 +61,7 @@
                 Showing {{ $entries->count() }} of {{ $entries->total() ?? $entries->count() }} entries
             </span>
             <div class="flex-1 lg:flex-none">
-                <a href="{{ route('statements.index', ['account' => $account->id]) }}"
+                <a href="{{ route('statements.index', ['uuid' => auth()->user()->uuid, 'account' => $account->id]) }}"
                     class="bg-brass text-ink rounded text-[12.5px] font-semibold px-4.5 py-2.5 hover:bg-brass-soft transition-colors w-full lg:w-auto text-center block lg:inline-block">
                     View full statement
                 </a>

@@ -14,6 +14,35 @@
         <h2 class="font-display text-xl mb-2 text-ink">Dormant Customers (Current Month)</h2>
         <p class="text-muted text-sm mb-6">Customers with zero transaction activity in the current calendar month.</p>
 
+        <!-- Filters -->
+        <form action="{{ route(request()->route()->getName(), request()->route()->parameters()) }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end mb-6 bg-paper/50 p-4 border border-ink/5">
+            <div>
+                <label for="name" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Customer Name</label>
+                <input type="text" name="name" id="name" value="{{ request('name') }}" class="w-full bg-white border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
+            </div>
+            <div>
+                <label for="email" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Email</label>
+                <input type="text" name="email" id="email" value="{{ request('email') }}" class="w-full bg-white border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
+            </div>
+            <div>
+                <label for="txn_count" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Transactions</label>
+                <input type="number" min="0" name="txn_count" id="txn_count" value="{{ request('txn_count') }}" class="w-full bg-white border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
+            </div>
+            <div>
+                <label for="status" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Status</label>
+                <select name="status" id="status" class="w-full bg-white border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
+                    <option value="">All Statuses</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                    <option value="dormant" {{ request('status') == 'dormant' ? 'selected' : '' }}>Dormant</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="w-full bg-brass hover:bg-brass-soft text-ink font-mono font-medium py-2 px-4 uppercase tracking-widest text-sm transition-colors cursor-pointer">
+                    Filter
+                </button>
+            </div>
+        </form>
+
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="border-b border-ink/10">
@@ -46,5 +75,9 @@
                 @endforelse
             </tbody>
         </table>
+        
+        <div class="mt-6">
+            {{ $dormantCustomers->links() }}
+        </div>
     </div>
 @endsection

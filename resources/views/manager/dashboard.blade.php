@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Staff Dashboard - LedgerCore')
+@section('title', 'Manager Dashboard - LedgerCore')
 
 @section('content')
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-9 gap-4">
         <div>
             <div class="text-[11px] tracking-[0.18em] uppercase text-ink/80 font-mono">
-                {{ ucfirst(auth()->user()->role) }} Dashboard
+                Manager Dashboard
             </div>
-            <h1 class="font-display text-[28px] font-medium mt-1">Global Overview</h1>
+            <h1 class="font-display text-[28px] font-medium mt-1">Branch Overview</h1>
         </div>
         <div class="font-mono text-[11px] text-ink/80 text-left md:text-right">
             As of {{ now()->format('d M Y · H:i') }}
@@ -54,8 +54,7 @@
             </div>
         @else
             <!-- Header -->
-            <div
-                class="hidden lg:grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 p-4 border-b border-ink/10 bg-paper/50 font-mono text-[10px] uppercase tracking-widest text-muted">
+            <div class="hidden lg:grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 p-4 border-b border-ink/10 bg-paper/50 font-mono text-[10px] uppercase tracking-widest text-muted">
                 <div>Date & Time</div>
                 <div>Account & Details</div>
                 <div class="text-right">Amount</div>
@@ -72,33 +71,25 @@
                         $amountClass = $isCredit ? 'text-ledger-teal' : 'text-ledger-rust';
                     @endphp
 
-                    <div
-                        class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr_1fr] gap-2 lg:gap-4 p-4 items-center hover:bg-paper/30 transition-colors">
+                    <div class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr_1fr] gap-2 lg:gap-4 p-4 items-center hover:bg-paper/30 transition-colors">
                         <div class="font-mono text-[11px] text-muted whitespace-nowrap">
                             <div class="text-ink/80">{{ $entry->created_at->format('M d, Y') }}</div>
                             <div class="text-[10px]">{{ $entry->created_at->format('H:i') }}</div>
                         </div>
 
                         <div class="flex items-center gap-4">
-                            <div
-                                class="w-8 h-8 rounded-full border flex items-center justify-center shrink-0 {{ $iconClass }}">
+                            <div class="w-8 h-8 rounded-full border flex items-center justify-center shrink-0 {{ $iconClass }}">
                                 @if ($entry->type === 'deposit')
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                                     </svg>
                                 @elseif($entry->type === 'withdrawal')
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
                                     </svg>
                                 @else
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                                     </svg>
                                 @endif
                             </div>
@@ -117,7 +108,6 @@
                         </div>
 
                         <div class="font-mono text-[13px] text-muted lg:text-right hidden lg:block">
-                            <!-- We don't have running balance calculated perfectly in this list since it's global, just show N/A or hide -->
                             <span class="opacity-30">N/A</span>
                         </div>
                     </div>

@@ -48,27 +48,42 @@
         <nav class="flex flex-col gap-1">
             @php
                 $role = auth()->user()->role ?? 'customer';
-                $prefix = $role === 'teller' ? 'teller.' : '';
+                $prefix = match($role) {
+                    'teller' => 'teller.',
+                    'auditor' => 'auditor.',
+                    'manager' => 'manager.',
+                    default => ''
+                };
 
                 $links = [
                     ['label' => 'Overview', 'route' => $prefix . 'dashboard'],
                     ['label' => 'Accounts', 'route' => $prefix . 'accounts.index'],
-                    ['label' => 'Transfers', 'route' => $prefix . 'transfers.index'],
                 ];
                 
+                if (in_array($role, ['customer', 'teller'])) {
+                    $links[] = ['label' => 'Transfers', 'route' => $prefix . 'transfers.index'];
+                }
+                
                 if ($role !== 'teller') {
-                    $links[] = ['label' => 'Statements', 'route' => 'statements.index'];
+                    $route = in_array($role, ['auditor', 'manager']) ? $prefix . 'statements.index' : 'statements.index';
+                    $links[] = ['label' => 'Statements', 'route' => $route];
                 }
                 
                 if (in_array($role, ['auditor', 'manager'])) {
-                    $links[] = ['label' => 'Reports', 'route' => 'reports.index'];
-                    $links[] = ['label' => 'Audit Trail', 'route' => 'audit.index'];
+                    $links[] = ['label' => 'Reports', 'route' => $prefix . 'reports.index'];
+                }
+                
+                if ($role === 'auditor') {
+                    $links[] = ['label' => 'Audit Trail', 'route' => $prefix . 'audit.index'];
                 }
             @endphp
 
             @foreach ($links as $link)
-                @php $isActive = request()->routeIs($link['route']); @endphp
-                <a href="{{ route($link['route']) }}"
+                @php
+                    $isActive = request()->routeIs($link['route']);
+                    $routeParams = ($role === 'customer') ? ['uuid' => auth()->user()->uuid] : [];
+                @endphp
+                <a href="{{ route($link['route'], $routeParams) }}"
                    class="flex items-center gap-2.5 px-3 py-2.5 rounded text-[13.5px] border-l-2 transition-colors
                           {{ $isActive
                                 ? 'text-paper bg-panel border-brass'
@@ -107,7 +122,7 @@
     {{-- MAIN --}}
     <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         {{-- HEADER --}}
-        <header class="flex items-center p-4 md:px-8 bg-paper border-b border-ink/5 gap-4">
+        <header class="flex items-center py-4 px-6 md:px-14 bg-paper border-b border-ink/5 gap-4">
             <button @click="sidebarOpen = !sidebarOpen" class="text-ink/60 hover:text-ink focus:outline-none p-2 rounded bg-white border border-ink/10 shadow-sm transition-colors shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />

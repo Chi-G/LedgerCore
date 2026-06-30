@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'LedgerCore — Statements')
+@section('title', 'LedgerCore — Customer Statements')
 
 @section('content')
     <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b border-ink/10 pb-4 gap-4">
         <div>
-            <h1 class="font-display font-medium text-3xl tracking-tight">Account Statement</h1>
-            <p class="text-muted mt-1 text-[13.5px]">Ledger tape for transaction history.</p>
+            <h1 class="font-display font-medium text-3xl tracking-tight">Customer Statement</h1>
+            <p class="text-muted mt-1 text-[13.5px]">Ledger tape for customer transaction history lookup.</p>
         </div>
 
         @if($selectedAccount)
@@ -21,14 +21,8 @@
     <div class="bg-white border border-ink/10 p-6 mb-8 shadow-sm">
         <form action="{{ route(request()->route()->getName(), request()->route()->parameters()) }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
             <div>
-                <label for="account" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Account</label>
-                <select name="account" id="account" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
-                    @foreach($accounts as $acc)
-                        <option value="{{ $acc->id }}" {{ ($selectedAccount && $selectedAccount->id == $acc->id) ? 'selected' : '' }}>
-                            {{ $acc->account_number }}
-                        </option>
-                    @endforeach
-                </select>
+                <label for="account_number" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Account Number</label>
+                <input type="text" name="account_number" id="account_number" value="{{ request('account_number') }}" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass" placeholder="Enter Account #">
             </div>
             <div>
                 <label for="from" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">From Date</label>
@@ -45,13 +39,14 @@
                     </svg>
                 </a>
                 <button type="submit" class="w-2/3 bg-brass hover:bg-brass-soft text-ink font-mono font-medium py-2 px-4 uppercase tracking-widest text-sm transition-colors cursor-pointer">
-                    Filter
+                    Lookup
                 </button>
             </div>
         </form>
     </div>
 
     <!-- Ledger Tape -->
+    @if ($selectedAccount || $accountQuery)
     <div class="bg-white border-l-2 border-l-ink border-y border-r border-ink/10 relative shadow-sm">
         <!-- Tape Perforation Detail -->
         <div class="absolute left-0 top-0 bottom-0 w-[4px] border-r border-dashed border-ink/10"></div>
@@ -95,7 +90,7 @@
                     @empty
                         <tr>
                             <td colspan="5" class="py-12 text-center text-muted border-none">
-                                No ledger entries found for this period.
+                                {{ $selectedAccount ? 'No ledger entries found for this period.' : 'Account not found.' }}
                             </td>
                         </tr>
                     @endforelse
@@ -109,4 +104,9 @@
             </div>
         @endif
     </div>
+    @else
+        <div class="px-7 py-10 text-center text-[#9C9486] text-sm font-mono border border-ink/10 bg-white">
+            Please enter an account number to lookup statements.
+        </div>
+    @endif
 @endsection

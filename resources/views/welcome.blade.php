@@ -22,8 +22,14 @@
             @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
                     @auth
+                        @php
+                            $user = auth()->user();
+                            $dashRoute = in_array($user->role, ['teller', 'auditor', 'manager']) 
+                                ? route($user->role . '.dashboard') 
+                                : route('dashboard', ['uuid' => $user->uuid]);
+                        @endphp
                         <a
-                            href="{{ url('/dashboard') }}"
+                            href="{{ $dashRoute }}"
                             class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
                         >
                             Dashboard

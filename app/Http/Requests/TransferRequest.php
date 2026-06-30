@@ -14,17 +14,31 @@ class TransferRequest extends FormRequest
     public function rules(): array
     {
         $isTeller = $this->user() && $this->user()->role === 'teller';
+        $type = $this->input('transaction_type', 'transfer');
 
-        return [
-            'source_account' => $isTeller ? ['nullable'] : ['required', 'string', 'exists:accounts,account_number'],
-            'destination_account' => array_filter([
-                'required', 
-                'string', 
-                'exists:accounts,account_number', 
-                $isTeller ? '' : 'different:source_account'
-            ]),
+        $rules = [
             'amount' => ['required', 'numeric', 'min:0.01'],
             'reference' => ['nullable', 'string', 'unique:ledger_entries,reference'],
         ];
+
+        if ($isTeller) {
+            $rules['transaction_type'] = ['required', 'in:deposit,withdrawal,transfer'];
+            
+            if ($type === 'deposit') {
+                $rules['destination_account'] = ['required', 'string', 'exists:accounts,account_number'];
+            } elseif ($type === 'withdrawal') {
+                $rules['source_account'] = ['required', 'string', 'exists:accounts,account_number'];
+                $rules['pin'] = ['required', 'string'];
+            } elseif ($type === 'transfer') {
+                $rules['source_account'] = ['required', 'string', 'exists:accounts,account_number'];
+                $rules['destination_account'] = ['required', 'string', 'exists:accounts,account_number', 'different:source_account'];
+                $rules['pin'] = ['required', 'string'];
+            }
+        } else {
+            $rules['source_account'] = ['required', 'string', 'exists:accounts,account_number'];
+            $rules['destination_account'] = ['required', 'string', 'exists:accounts,account_number', 'different:source_account'];
+        }
+
+        return $rules;
     }
 }

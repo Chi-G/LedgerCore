@@ -12,13 +12,29 @@
 
     <!-- Filters -->
     <div class="bg-white border border-ink/10 p-6 mb-8 shadow-sm">
-        <form action="{{ route('audit.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+        <form action="{{ route(request()->route()->getName(), request()->route()->parameters()) }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 items-end">
             <div>
                 <label for="reference" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Reference ID</label>
                 <input type="text" name="reference" id="reference" value="{{ request('reference') }}" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
             </div>
             <div>
-                <label for="type" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Transaction Type</label>
+                <label for="account_number" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Account No.</label>
+                <input type="text" name="account_number" id="account_number" value="{{ request('account_number') }}" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
+            </div>
+            <div>
+                <label for="account_name" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Account Name</label>
+                <input type="text" name="account_name" id="account_name" value="{{ request('account_name') }}" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
+            </div>
+            <div>
+                <label for="date" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Date</label>
+                <input type="date" name="date" id="date" value="{{ request('date') }}" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
+            </div>
+            <div>
+                <label for="amount" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Amount</label>
+                <input type="number" step="0.01" name="amount" id="amount" value="{{ request('amount') }}" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
+            </div>
+            <div>
+                <label for="type" class="block font-mono text-xs uppercase tracking-widest text-muted mb-2">Txn Type</label>
                 <select name="type" id="type" class="w-full bg-paper border border-ink/10 text-ink p-2 font-mono text-sm focus:outline-none focus:border-brass">
                     <option value="">All Types</option>
                     <option value="transfer" {{ request('type') == 'transfer' ? 'selected' : '' }}>Transfer</option>
@@ -28,7 +44,7 @@
             </div>
             <div>
                 <button type="submit" class="w-full bg-brass hover:bg-brass-soft text-ink font-mono font-medium py-2 px-4 uppercase tracking-widest text-sm transition-colors cursor-pointer">
-                    Search Ledger
+                    Search
                 </button>
             </div>
         </form>

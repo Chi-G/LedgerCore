@@ -48,4 +48,23 @@ class LedgerService
             ]);
         });
     }
+
+    public function recordWithdrawal(Account $from, float $amount, string $reference): void
+    {
+        DB::transaction(function () use ($from, $amount, $reference) {
+            $lockedFrom = Account::where('id', $from->id)->lockForUpdate()->first();
+
+            if ($lockedFrom->balance() < $amount) {
+                throw new InsufficientFundsException();
+            }
+
+            LedgerEntry::create([
+                'account_id' => $from->id,
+                'direction' => 'debit',
+                'amount' => $amount,
+                'type' => 'withdrawal',
+                'reference' => $reference,
+            ]);
+        });
+    }
 }

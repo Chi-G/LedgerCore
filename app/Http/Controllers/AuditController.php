@@ -25,6 +25,26 @@ class AuditController extends Controller
             $entriesQuery->where('type', $request->type);
         }
 
+        if ($request->filled('date')) {
+            $entriesQuery->whereDate('created_at', $request->date);
+        }
+
+        if ($request->filled('account_number')) {
+            $entriesQuery->whereHas('account', function ($query) use ($request) {
+                $query->where('account_number', 'like', '%' . $request->account_number . '%');
+            });
+        }
+
+        if ($request->filled('amount')) {
+            $entriesQuery->where('amount', $request->amount);
+        }
+
+        if ($request->filled('account_name')) {
+            $entriesQuery->whereHas('account.user', function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->account_name . '%');
+            });
+        }
+
         $entries = $entriesQuery->paginate(30);
         $entries->appends($request->all());
 

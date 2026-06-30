@@ -23,11 +23,11 @@ class AuthController extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
 
-            if ($user->role === 'teller') {
-                return redirect()->intended(route('teller.dashboard'));
+            if (in_array($user->role, ['teller', 'auditor', 'manager'])) {
+                return redirect()->intended(route($user->role . '.dashboard'));
             }
 
-            return redirect()->intended('dashboard');
+            return redirect()->intended(route('dashboard', ['uuid' => $user->uuid]));
         }
 
         return back()->withErrors([
