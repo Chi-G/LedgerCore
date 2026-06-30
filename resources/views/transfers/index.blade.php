@@ -87,7 +87,7 @@
                             @foreach ($accounts as $account)
                                 <option value="{{ $account->account_number }}"
                                     {{ old('source_account', $accounts->count() === 1 ? $accounts->first()->account_number : '') == $account->account_number ? 'selected' : '' }}>
-                                    {{ $account->account_number }} (₦{{ number_format($account->balance(), 2) }})
+                                    {{ ucfirst($account->type) }} — {{ $account->account_number }} (₦{{ number_format($account->balance(), 2) }})
                                 </option>
                             @endforeach
                         </select>
@@ -119,7 +119,7 @@
 
                 <div>
                     <label for="reference"
-                        class="block font-mono text-xs uppercase tracking-widest text-ink/80 mb-2">Reference
+                        class="block font-mono text-xs uppercase tracking-widest text-ink/80 mb-2">Description
                         (Optional)</label>
                     <input id="reference" type="text" name="reference" value="{{ old('reference') }}"
                         class="w-full bg-paper border border-ink/10 text-ink py-2.5 px-3 focus:outline-none focus:border-brass focus:ring-1 focus:ring-brass transition-colors font-mono text-sm placeholder:text-[9.5px] md:placeholder:text-sm"

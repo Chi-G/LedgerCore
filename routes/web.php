@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (auth()->check()) {
+        /** @var \App\Models\User $user */
         $user = auth()->user();
         if (in_array($user->role, ['teller', 'auditor', 'manager'])) {
             return redirect()->route($user->role.'.dashboard');
@@ -47,6 +48,7 @@ Route::prefix('auditor')->middleware('auth')->name('auditor.')->group(function (
     Route::get('/dashboard', [App\Http\Controllers\Auditor\DashboardController::class, '__invoke'])->name('dashboard');
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/statements', [App\Http\Controllers\Auditor\StatementController::class, 'index'])->name('statements.index');
+    Route::get('/statements/{entry}', [App\Http\Controllers\Auditor\StatementController::class, 'show'])->name('statements.show');
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/audit', [AuditController::class, 'index'])->name('audit.index');
 });
@@ -56,6 +58,7 @@ Route::prefix('manager')->middleware('auth')->name('manager.')->group(function (
     Route::get('/dashboard', [App\Http\Controllers\Manager\DashboardController::class, '__invoke'])->name('dashboard');
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/statements', [App\Http\Controllers\Manager\StatementController::class, 'index'])->name('statements.index');
+    Route::get('/statements/{entry}', [App\Http\Controllers\Manager\StatementController::class, 'show'])->name('statements.show');
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/audit', [AuditController::class, 'index'])->name('audit.index');
 });
@@ -68,6 +71,7 @@ Route::middleware(['auth', VerifyCustomerUuid::class])->prefix('{uuid}')->group(
     Route::get('/transfers', [TransferController::class, 'index'])->name('transfers.index');
     Route::post('/transfers', [TransferController::class, 'store'])->name('transfers.store');
     Route::get('/statements', [StatementController::class, 'index'])->name('statements.index');
+    Route::get('/statements/{entry}', [StatementController::class, 'show'])->name('statements.show');
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/audit', [AuditController::class, 'index'])->name('audit.index');
 });

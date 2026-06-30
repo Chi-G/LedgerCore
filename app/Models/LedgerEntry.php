@@ -23,4 +23,39 @@ class LedgerEntry extends Model
     {
         return $this->belongsTo(Account::class);
     }
+
+    public function getBaseReferenceAttribute(): string
+    {
+        return str_replace(['-debit', '-credit'], '', $this->reference);
+    }
+
+    public function getCounterpartyAttribute(): ?Account
+    {
+        if ($this->type !== 'transfer') {
+            return null;
+        }
+
+        $counterpartyDirection = $this->direction === 'credit' ? 'debit' : 'credit';
+        $counterpartyReference = $this->base_reference . '-' . $counterpartyDirection;
+
+        $counterpartyEntry = self::where('reference', $counterpartyReference)->first();
+
+        return $counterpartyEntry ? $counterpartyEntry->account : null;
+    }
+
+    public function getSenderAttribute(): ?Account
+    {
+        if ($this->type !== 'transfer') {
+            return null;
+        }
+        return $this->direction === 'debit' ? $this->account : $this->counterparty;
+    }
+
+    public function getRecipientAttribute(): ?Account
+    {
+        if ($this->type !== 'transfer') {
+            return null;
+        }
+        return $this->direction === 'credit' ? $this->account : $this->counterparty;
+    }
 }

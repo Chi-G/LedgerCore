@@ -17,16 +17,18 @@ class DashboardController extends Controller
     {
         $today = Carbon::today();
 
-        $totalDeposits = LedgerEntry::where('direction', 'credit')
-            ->whereDate('created_at', $today)
+        $totalDeposits = LedgerEntry::query()
+            ->where('direction', '=', 'credit', 'and')
+            ->whereDate('created_at', '=', $today, 'and')
             ->sum('amount');
 
-        $totalWithdrawals = LedgerEntry::where('direction', 'debit')
-            ->whereDate('created_at', $today)
+        $totalWithdrawals = LedgerEntry::query()
+            ->where('direction', '=', 'debit', 'and')
+            ->whereDate('created_at', '=', $today, 'and')
             ->sum('amount');
 
-        $activeAccountsCount = Account::count();
-        $recentTransactions = LedgerEntry::with('account')->latest()->paginate(10);
+        $activeAccountsCount = Account::query()->count('*');
+        $recentTransactions = LedgerEntry::query()->with('account')->latest()->take(10)->get();
 
         return view('manager.dashboard', compact(
             'totalDeposits',

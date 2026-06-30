@@ -14,21 +14,22 @@ class DashboardController extends Controller
         /** @var User $user */
         $user = $request->user();
         if ($user->role === 'teller') {
-            $totalDeposits = \App\Models\LedgerEntry::where('direction', 'credit')
-                ->where('type', 'deposit')
-                ->whereDate('created_at', now()->toDateString())
+            $totalDeposits = \App\Models\LedgerEntry::query()->where('direction', '=', 'credit', 'and')
+                ->where('type', '=', 'deposit', 'and')
+                ->whereDate('created_at', '=', now()->toDateString(), 'and')
                 ->sum('amount');
 
-            $totalWithdrawals = \App\Models\LedgerEntry::where('direction', 'debit')
-                ->where('type', 'withdrawal')
-                ->whereDate('created_at', now()->toDateString())
+            $totalWithdrawals = \App\Models\LedgerEntry::query()->where('direction', '=', 'debit', 'and')
+                ->where('type', '=', 'withdrawal', 'and')
+                ->whereDate('created_at', '=', now()->toDateString(), 'and')
                 ->sum('amount');
 
-            $activeAccountsCount = \App\Models\Account::count();
+            $activeAccountsCount = \App\Models\Account::query()->count('*');
 
-            $recentTransactions = \App\Models\LedgerEntry::with('account')
+            $recentTransactions = \App\Models\LedgerEntry::query()->with('account')
                 ->orderByDesc('created_at')
-                ->paginate(10);
+                ->take(10)
+                ->get();
 
             return view('staff.dashboard', compact('totalDeposits', 'totalWithdrawals', 'activeAccountsCount', 'recentTransactions'));
         }
@@ -49,7 +50,7 @@ class DashboardController extends Controller
             default => null,
         };
 
-        $entries = $entriesQuery->paginate(5)->withQueryString();
+        $entries = $entriesQuery->take(10)->get();
 
         $monthlyCredits = $account->ledgerEntries()
             ->where('direction', 'credit')

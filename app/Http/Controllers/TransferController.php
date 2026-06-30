@@ -31,7 +31,8 @@ class TransferController extends Controller
             if ($isTeller) {
                 if ($type === 'deposit') {
                     $toAccount = Account::where('account_number', $request->destination_account)->firstOrFail();
-                    $reference = $request->input('reference') ?? 'DEP-' . strtoupper(Str::random(8));
+                    $txId = 'DEP-' . strtoupper(Str::random(10));
+                    $reference = $request->filled('reference') ? $txId . ' - ' . $request->input('reference') : $txId;
                     
                     $ledgerService->recordDeposit(
                         $toAccount,
@@ -49,7 +50,8 @@ class TransferController extends Controller
                 }
 
                 if ($type === 'withdrawal') {
-                    $reference = $request->input('reference') ?? 'WDW-' . strtoupper(Str::random(8));
+                    $txId = 'WDW-' . strtoupper(Str::random(10));
+                    $reference = $request->filled('reference') ? $txId . ' - ' . $request->input('reference') : $txId;
                     $ledgerService->recordWithdrawal(
                         $fromAccount,
                         (float) $request->amount,
@@ -58,7 +60,8 @@ class TransferController extends Controller
                     return redirect()->route('teller.transfers.index')->with('success', 'Withdrawal processed successfully.');
                 } elseif ($type === 'transfer') {
                     $toAccount = Account::where('account_number', $request->destination_account)->firstOrFail();
-                    $reference = $request->input('reference') ?? 'TRF-' . strtoupper(Str::random(8));
+                    $txId = 'TRF-' . strtoupper(Str::random(10));
+                    $reference = $request->filled('reference') ? $txId . ' - ' . $request->input('reference') : $txId;
                     $ledgerService->recordTransfer(
                         $fromAccount,
                         $toAccount,
@@ -69,7 +72,8 @@ class TransferController extends Controller
                 }
             } else {
                 $toAccount = Account::where('account_number', $request->destination_account)->firstOrFail();
-                $reference = $request->input('reference') ?? 'TRF-' . strtoupper(Str::random(8));
+                $txId = 'TRF-' . strtoupper(Str::random(10));
+                $reference = $request->filled('reference') ? $txId . ' - ' . $request->input('reference') : $txId;
                 $fromAccount = Account::where('user_id', $request->user()->id)
                                       ->where('account_number', $request->source_account)
                                       ->firstOrFail();

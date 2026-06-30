@@ -16,7 +16,7 @@
 </head>
 <body class="bg-paper text-ink font-sans antialiased" x-data="{ showLogoutModal: false }">
 
-<div class="flex h-screen overflow-hidden" x-data="{ sidebarOpen: window.innerWidth >= 768 }" @resize.window="if(window.innerWidth < 768) sidebarOpen = false; else sidebarOpen = true;">
+<div class="flex h-screen print:h-auto print:overflow-visible overflow-hidden" x-data="{ sidebarOpen: window.innerWidth >= 768 }" @resize.window="if(window.innerWidth < 768) sidebarOpen = false; else sidebarOpen = true;">
 
     {{-- SIDEBAR BACKDROP --}}
     <div x-show="sidebarOpen" 
@@ -26,12 +26,12 @@
          x-transition:leave="transition-opacity ease-linear duration-300"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-20 bg-ink/80 backdrop-blur-sm md:hidden"
+         class="fixed inset-0 z-20 bg-ink/80 backdrop-blur-sm md:hidden print:hidden"
          @click="sidebarOpen = false" 
          style="display: none;"></div>
 
     {{-- SIDEBAR --}}
-    <aside :class="sidebarOpen ? 'translate-x-0 md:ml-0' : '-translate-x-full md:-ml-[260px]'" class="fixed md:relative inset-y-0 left-0 z-30 w-[260px] transform bg-ink text-paper p-6 md:p-8 flex flex-col items-stretch gap-6 md:gap-10 transition-all duration-300 ease-in-out overflow-y-auto border-r border-white/10 shrink-0 shadow-2xl md:shadow-none">
+    <aside :class="sidebarOpen ? 'translate-x-0 md:ml-0' : '-translate-x-full md:-ml-[260px]'" class="print:hidden fixed md:relative inset-y-0 left-0 z-30 w-[260px] transform bg-ink text-paper p-6 md:p-8 flex flex-col items-stretch gap-6 md:gap-10 transition-all duration-300 ease-in-out overflow-y-auto border-r border-white/10 shrink-0 shadow-2xl md:shadow-none">
         <div class="flex items-center gap-2.5">
             <div class="w-[34px] h-[34px] border border-brass rounded text-brass-soft font-display flex items-center justify-center text-lg">L</div>
             <div>
@@ -120,9 +120,9 @@
     </aside>
 
     {{-- MAIN --}}
-    <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    <div class="flex-1 flex flex-col min-w-0 h-screen print:h-auto print:overflow-visible overflow-hidden print:block">
         {{-- HEADER --}}
-        <header class="flex items-center py-4 px-6 md:px-14 bg-paper border-b border-ink/5 gap-4">
+        <header class="print:hidden flex items-center py-4 px-6 md:px-14 bg-paper border-b border-ink/5 gap-4">
             <button @click="sidebarOpen = !sidebarOpen" class="text-ink/60 hover:text-ink focus:outline-none p-2 rounded bg-white border border-ink/10 shadow-sm transition-colors shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -135,7 +135,7 @@
         </header>
 
         {{-- MAIN SCROLLABLE CONTENT --}}
-        <main class="flex-1 overflow-y-auto px-6 md:px-14 py-8 md:py-10 bg-paper">
+        <main class="flex-1 overflow-y-auto print:overflow-visible px-6 md:px-14 py-8 md:py-10 print:px-0 print:py-0 bg-paper print:bg-white">
             @yield('content')
         </main>
     </div>

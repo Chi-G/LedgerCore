@@ -17,13 +17,14 @@ class DashboardController extends Controller
     {
         $today = Carbon::today();
 
-        $highValueTransactions = LedgerEntry::where('amount', '>=', 10000)
-            ->whereDate('created_at', $today)
-            ->count();
-
-        $totalEntriesToday = LedgerEntry::whereDate('created_at', $today)->count();
-        $activeAccountsCount = Account::count();
-        $recentTransactions = LedgerEntry::with('account')->latest()->paginate(10);
+        $highValueTransactions = LedgerEntry::query()
+            ->where('amount', '>=', 100000, 'and')
+            ->whereDate('created_at', '=', $today, 'and')
+            ->count('*');
+            
+        $totalEntriesToday = LedgerEntry::query()->whereDate('created_at', '=', $today, 'and')->count('*');
+        $activeAccountsCount = Account::query()->count('*');
+        $recentTransactions = LedgerEntry::query()->with('account')->latest()->take(10)->get();
 
         return view('auditor.dashboard', compact(
             'highValueTransactions',

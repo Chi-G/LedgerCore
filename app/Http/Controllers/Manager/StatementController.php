@@ -43,4 +43,9 @@ class StatementController extends Controller
             'accountQuery' => $accountQuery,
         ]);
     }
+
+    public function show(\App\Models\LedgerEntry $entry)
+    {
+        return view('statements.show', compact('entry'));
+    }
 }

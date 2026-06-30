@@ -15,7 +15,7 @@ class StatementController extends Controller
         $paginatedEntries = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10);
 
         if ($accountQuery) {
-            $selectedAccount = Account::where('account_number', $accountQuery)->first();
+            $selectedAccount = Account::query()->where('account_number', '=', $accountQuery, 'and')->first();
 
             if ($selectedAccount) {
                 $entriesQuery = $selectedAccount->ledgerEntries()->orderByDesc('created_at');
@@ -42,5 +42,10 @@ class StatementController extends Controller
             'selectedAccount' => $selectedAccount,
             'accountQuery' => $accountQuery,
         ]);
+    }
+
+    public function show(\App\Models\LedgerEntry $entry)
+    {
+        return view('statements.show', compact('entry'));
     }
 }

@@ -12,7 +12,7 @@ class LedgerService
     public function recordTransfer(Account $from, Account $to, float $amount, string $reference): void
     {
         DB::transaction(function () use ($from, $to, $amount, $reference) {
-            $lockedFrom = Account::where('id', $from->id)->lockForUpdate()->first();
+            $lockedFrom = Account::query()->where('id', '=', $from->id, 'and')->lockForUpdate()->first();
 
             if ($lockedFrom->balance() < $amount) {
                 throw new InsufficientFundsException();
@@ -52,7 +52,7 @@ class LedgerService
     public function recordWithdrawal(Account $from, float $amount, string $reference): void
     {
         DB::transaction(function () use ($from, $amount, $reference) {
-            $lockedFrom = Account::where('id', $from->id)->lockForUpdate()->first();
+            $lockedFrom = Account::query()->where('id', '=', $from->id, 'and')->lockForUpdate()->first();
 
             if ($lockedFrom->balance() < $amount) {
                 throw new InsufficientFundsException();

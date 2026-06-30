@@ -117,16 +117,13 @@
                         </div>
 
                         <div class="font-mono text-[13px] text-muted lg:text-right hidden lg:block">
-                            <!-- We don't have running balance calculated perfectly in this list since it's global, just show N/A or hide -->
-                            <span class="opacity-30">N/A</span>
+                            ₦{{ number_format($entry->account->balance(), 2) }}
                         </div>
                     </div>
                 @endforeach
             </div>
         @endif
         
-        <div class="p-4 border-t border-ink/10 bg-white">
-            {{ $recentTransactions->links() }}
-        </div>
+
     </div>
 @endsection

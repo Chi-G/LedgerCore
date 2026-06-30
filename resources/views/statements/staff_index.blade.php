@@ -56,7 +56,7 @@
                 <thead>
                     <tr class="border-b border-ink/10">
                         <th class="py-4 px-6 font-mono text-[10px] text-muted uppercase tracking-[0.16em] w-32">Timestamp</th>
-                        <th class="py-4 px-6 font-mono text-[10px] text-muted uppercase tracking-[0.16em]">Ref</th>
+                        <th class="py-4 px-6 font-mono text-[10px] text-muted uppercase tracking-[0.16em]">Details</th>
                         <th class="py-4 px-6 font-mono text-[10px] text-muted uppercase tracking-[0.16em]">Type</th>
                         <th class="py-4 px-6 font-mono text-[10px] text-muted uppercase tracking-[0.16em] text-right">Debit</th>
                         <th class="py-4 px-6 font-mono text-[10px] text-muted uppercase tracking-[0.16em] text-right">Credit</th>
@@ -64,9 +64,20 @@
                 </thead>
                 <tbody class="font-mono text-[13.5px]">
                     @forelse($entries as $entry)
-                        <tr class="border-b border-ink/5 hover:bg-paper/50 transition-colors">
+                        <tr onclick="window.location='{{ route(str_replace('.index', '.show', request()->route()->getName()), $entry->id) }}'" class="border-b border-ink/5 hover:bg-paper/50 transition-colors cursor-pointer">
                             <td class="py-4 px-6 text-muted">{{ $entry->created_at->format('M d, y H:i') }}</td>
-                            <td class="py-4 px-6 text-ink/80">{{ $entry->reference }}</td>
+                            <td class="py-4 px-6 text-ink/80">
+                                <div class="mb-1">{{ $entry->reference }}</div>
+                                @if($entry->type === 'transfer')
+                                    <div class="text-[11px] text-muted">
+                                        @if($entry->direction === 'credit')
+                                            From: {{ optional(optional($entry->sender)->user)->name ?? 'Unknown' }} ({{ optional($entry->sender)->account_number ?? 'N/A' }})
+                                        @else
+                                            To: {{ optional(optional($entry->recipient)->user)->name ?? 'Unknown' }} ({{ optional($entry->recipient)->account_number ?? 'N/A' }})
+                                        @endif
+                                    </div>
+                                @endif
+                            </td>
                             <td class="py-4 px-6 text-ink/80 uppercase text-xs">{{ $entry->type }}</td>
                             
                             @if($entry->direction === 'debit')

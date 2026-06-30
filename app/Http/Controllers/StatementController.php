@@ -27,7 +27,7 @@ class StatementController extends Controller
         $selectedAccount = $accountId ? $accounts->firstWhere('id', $accountId) : $accounts->first();
 
         if (!$selectedAccount) {
-            return view('statements.index', ['entries' => new \Illuminate\Pagination\LengthAwarePaginator([], 0, 5), 'accounts' => $accounts, 'selectedAccount' => null]);
+            return view('statements.index', ['entries' => new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10), 'accounts' => $accounts, 'selectedAccount' => null]);
         }
 
         // If they requested an account they don't have access to
@@ -49,11 +49,29 @@ class StatementController extends Controller
             $entriesQuery->where('type', $request->type);
         }
 
-        $entries = $entriesQuery->paginate(5);
+        $entries = $entriesQuery->paginate(10);
         
         // Preserve query parameters for pagination
         $entries->appends($request->all());
 
         return view('statements.index', compact('entries', 'accounts', 'selectedAccount'));
+    }
+
+    public function show(Request $request, string $uuid, \App\Models\LedgerEntry $entry)
+    {
+        $user = $request->user();
+
+        if ($user->role === 'teller') {
+            abort(403, 'Unauthorized access.');
+        }
+
+        // Verify the entry belongs to an account the user has access to
+        if (!in_array($user->role, ['auditor', 'manager'])) {
+            if (!$user->accounts()->where('accounts.id', $entry->account_id)->exists()) {
+                abort(403, 'Unauthorized access to this statement record.');
+            }
+        }
+
+        return view('statements.show', compact('entry'));
     }
 }

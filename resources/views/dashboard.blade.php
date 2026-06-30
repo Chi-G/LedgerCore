@@ -58,7 +58,7 @@
 
         <div class="px-7 py-4 flex justify-between items-center border-t border-[#E7E2D6]">
             <span class="text-[11px] text-[#9C9486] font-mono hidden lg:inline">
-                Showing {{ $entries->count() }} of {{ $entries->total() ?? $entries->count() }} entries
+                Showing {{ $entries->count() }} recent entries
             </span>
             <div class="flex-1 lg:flex-none">
                 <a href="{{ route('statements.index', ['uuid' => auth()->user()->uuid, 'account' => $account->id]) }}"
@@ -68,11 +68,7 @@
             </div>
         </div>
 
-        @if ($entries->hasPages())
-            <div class="px-7 py-4 border-t border-[#E7E2D6] bg-[#FAFAFA]">
-                {{ $entries->links() }}
-            </div>
-        @endif
+
     </div>
 
 @endsection
