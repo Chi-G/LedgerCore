@@ -83,9 +83,9 @@ jobs:
             # 2. Run Laravel artisan commands
             cd "$CORE_PATH"
             
-            # Since this is a demo environment, run migrate:fresh to wipe and re-seed the db on every push.
-            # If you want to keep data between deployments, change this to: php artisan migrate --force
-            php artisan migrate:fresh --seed --force
+            # Run normal migrations so data is preserved and deployments are fast.
+            # If you ever need to reset the DB, run `php artisan migrate:fresh --seed` manually via SSH.
+            php artisan migrate --force
             
             # Clear caches
             php artisan optimize:clear
