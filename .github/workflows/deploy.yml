@@ -1,0 +1,95 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3' # LedgerCore uses PHP 8.3
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --no-progress --prefer-dist
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install NPM dependencies and build Vite assets
+        run: |
+          npm ci
+          npm run build
+
+      - name: Sync files to Hostinger via Rsync
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          # Install sshpass to use password authentication with rsync
+          sudo apt-get update && sudo apt-get install -y sshpass
+          
+          # Create deployment directory variable
+          DEPLOY_PATH="/home/u157985566/domains/forahia.com/ledger_core"
+          
+          # Use sshpass with rsync to deploy
+          # Note: We exclude .git, node_modules, and tests to save space and time
+          # StrictHostKeyChecking is disabled to prevent interactive prompts on first connect
+          sshpass -p "$HOSTINGER_PASSWORD" rsync -avz --no-perms --no-owner --no-group \
+            --exclude '.git*' \
+            --exclude 'node_modules' \
+            --exclude 'tests' \
+            -e "ssh -p $HOSTINGER_PORT -o StrictHostKeyChecking=no" \
+            ./ $HOSTINGER_USERNAME@$HOSTINGER_HOST:$DEPLOY_PATH/
+
+      - name: Run Post-Deploy Commands on Hostinger
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_HOST }}
+          HOSTINGER_PORT: ${{ secrets.HOSTINGER_PORT }}
+          HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_PASSWORD }}
+        run: |
+          # Define paths
+          CORE_PATH="/home/u157985566/domains/forahia.com/ledger_core"
+          PUBLIC_HTML_PATH="/home/u157985566/domains/forahia.com/public_html/ledger"
+          
+          sshpass -p "$HOSTINGER_PASSWORD" ssh -p $HOSTINGER_PORT -o StrictHostKeyChecking=no $HOSTINGER_USERNAME@$HOSTINGER_HOST << EOF
+            # 1. Ensure the symlink from ledger_core/public to public_html/ledger exists
+            if [ -d "$PUBLIC_HTML_PATH" ] && [ ! -L "$PUBLIC_HTML_PATH" ]; then
+              # If it's a real directory (created by Hostinger), remove it
+              rm -rf "$PUBLIC_HTML_PATH"
+            fi
+            
+            # Create the symlink if it doesn't exist
+            if [ ! -e "$PUBLIC_HTML_PATH" ]; then
+              ln -s "$CORE_PATH/public" "$PUBLIC_HTML_PATH"
+              echo "Symlink created successfully!"
+            fi
+            
+            # 2. Run Laravel artisan commands
+            cd "$CORE_PATH"
+            
+            # Since this is a demo environment, run migrate:fresh to wipe and re-seed the db on every push.
+            # If you want to keep data between deployments, change this to: php artisan migrate --force
+            php artisan migrate:fresh --seed --force
+            
+            # Clear caches
+            php artisan optimize:clear
+            
+            # Note: Do not run 'php artisan optimize' on shared hosting unless you have properly 
+            # configured route caching without closures. 'optimize:clear' is safer.
+          EOF
