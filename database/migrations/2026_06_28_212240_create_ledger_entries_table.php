@@ -18,6 +18,8 @@ return new class extends Migration
             $table->decimal('amount', 15, 2);
             $table->string('type');
             $table->string('reference')->unique();
+            $table->uuid('idempotency_key')->nullable()->unique();
+            $table->string('hash', 64)->nullable();
             $table->timestamps();
 
             $table->index(['account_id', 'created_at']);

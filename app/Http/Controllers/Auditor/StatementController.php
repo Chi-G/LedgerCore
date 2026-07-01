@@ -4,15 +4,20 @@ namespace App\Http\Controllers\Auditor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Account;
+use App\Models\LedgerEntry;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Support\Facades\Gate;
 
 class StatementController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('viewAny', LedgerEntry::class);
+
         $accountQuery = $request->query('account_number');
         $selectedAccount = null;
-        $paginatedEntries = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10);
+        $paginatedEntries = new CursorPaginator([], 15);
 
         if ($accountQuery) {
             $selectedAccount = Account::query()->where('account_number', '=', $accountQuery, 'and')->first();
@@ -32,7 +37,7 @@ class StatementController extends Controller
                     $entriesQuery->where('type', $request->type);
                 }
 
-                $paginatedEntries = $entriesQuery->paginate(10);
+                $paginatedEntries = $entriesQuery->cursorPaginate(15);
                 $paginatedEntries->appends($request->all());
             }
         }
@@ -44,8 +49,10 @@ class StatementController extends Controller
         ]);
     }
 
-    public function show(\App\Models\LedgerEntry $entry)
+    public function show(LedgerEntry $entry)
     {
+        Gate::authorize('view', $entry);
+
         return view('statements.show', compact('entry'));
     }
 }

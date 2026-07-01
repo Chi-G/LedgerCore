@@ -117,6 +117,57 @@
             </div>
         </div>
 
+        <!-- AI Ledger Explainer (Manager Only) -->
+        @if(auth()->check() && auth()->user()->role === 'manager')
+        <div class="mt-8 pt-8 border-t-2 border-dashed border-ink/20 no-print" x-data="{
+            explaining: false,
+            explanation: null,
+            explainEntry() {
+                this.explaining = true;
+                fetch('{{ route('manager.statements.explain', $entry->id) }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    this.explanation = data.explanation;
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Failed to get explanation');
+                })
+                .finally(() => {
+                    this.explaining = false;
+                });
+            }
+        }">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h3 class="font-display text-lg flex items-center gap-2">
+                        <svg class="w-5 h-5 text-brass" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"></path></svg>
+                        AI Entry Explainer
+                    </h3>
+                    <p class="text-muted font-mono text-[11px] uppercase tracking-widest mt-1">Translate ledger entry to plain english</p>
+                </div>
+                <button @click="explainEntry" x-show="!explanation" :disabled="explaining" class="border border-brass/30 bg-brass/10 hover:bg-brass/20 text-brass px-4 py-2 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2">
+                    <span x-show="!explaining">Explain Entry</span>
+                    <span x-show="explaining" style="display: none;">
+                        <svg class="animate-spin h-3 w-3 text-brass" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        Analyzing...
+                    </span>
+                </button>
+            </div>
+            
+            <div x-show="explanation" x-transition.opacity style="display: none;" class="p-6 bg-paper border border-brass/20 shadow-sm relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-brass/5 to-transparent pointer-events-none"></div>
+                <p class="font-serif text-lg leading-relaxed text-ink relative z-10" x-text="explanation"></p>
+            </div>
+        </div>
+        @endif
+
         <!-- Footer -->
         <div class="mt-12 text-center text-xs font-mono text-muted uppercase tracking-[0.16em]">
             <p>Thank you for banking with LedgerCore.</p>

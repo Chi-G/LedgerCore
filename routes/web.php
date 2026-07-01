@@ -9,11 +9,12 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StatementController;
 use App\Http\Controllers\TransferController;
 use App\Http\Middleware\VerifyCustomerUuid;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = auth()->user();
         if (in_array($user->role, ['teller', 'auditor', 'manager'])) {
             return redirect()->route($user->role.'.dashboard');
@@ -36,15 +37,16 @@ Route::middleware('auth')->group(function () {
 });
 
 // teller Dashboard
-Route::prefix('teller')->middleware('auth')->name('teller.')->group(function () {
+Route::prefix('teller')->middleware(['auth', 'role:teller'])->name('teller.')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/transfers', [TransferController::class, 'index'])->name('transfers.index');
+    Route::post('/transfers/analyze', [TransferController::class, 'analyzeRisk'])->name('transfers.analyze');
     Route::post('/transfers', [TransferController::class, 'store'])->name('transfers.store');
 });
 
 // auditor Dashboard
-Route::prefix('auditor')->middleware('auth')->name('auditor.')->group(function () {
+Route::prefix('auditor')->middleware(['auth', 'role:auditor'])->name('auditor.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Auditor\DashboardController::class, '__invoke'])->name('dashboard');
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/statements', [App\Http\Controllers\Auditor\StatementController::class, 'index'])->name('statements.index');
@@ -54,21 +56,23 @@ Route::prefix('auditor')->middleware('auth')->name('auditor.')->group(function (
 });
 
 // manager Dashboard
-Route::prefix('manager')->middleware('auth')->name('manager.')->group(function () {
+Route::prefix('manager')->middleware(['auth', 'role:manager'])->name('manager.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Manager\DashboardController::class, '__invoke'])->name('dashboard');
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/statements', [App\Http\Controllers\Manager\StatementController::class, 'index'])->name('statements.index');
     Route::get('/statements/{entry}', [App\Http\Controllers\Manager\StatementController::class, 'show'])->name('statements.show');
+    Route::post('/statements/{entry}/explain', [App\Http\Controllers\Manager\StatementController::class, 'explain'])->name('statements.explain');
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/audit', [AuditController::class, 'index'])->name('audit.index');
 });
 
 // customer Dashboard
-Route::middleware(['auth', VerifyCustomerUuid::class])->prefix('{uuid}')->group(function () {
+Route::middleware(['auth', 'role:customer', VerifyCustomerUuid::class])->prefix('{uuid}')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/transfers', [TransferController::class, 'index'])->name('transfers.index');
+    Route::post('/transfers/analyze', [TransferController::class, 'analyzeRisk'])->name('transfers.analyze');
     Route::post('/transfers', [TransferController::class, 'store'])->name('transfers.store');
     Route::get('/statements', [StatementController::class, 'index'])->name('statements.index');
     Route::get('/statements/{entry}', [StatementController::class, 'show'])->name('statements.show');

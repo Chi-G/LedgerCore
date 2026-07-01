@@ -19,11 +19,12 @@ class TransferRequest extends FormRequest
         $rules = [
             'amount' => ['required', 'numeric', 'min:0.01'],
             'reference' => ['nullable', 'string', 'unique:ledger_entries,reference'],
+            'idempotency_key' => ['required', 'string', 'uuid'],
         ];
 
         if ($isTeller) {
             $rules['transaction_type'] = ['required', 'in:deposit,withdrawal,transfer'];
-            
+
             if ($type === 'deposit') {
                 $rules['destination_account'] = ['required', 'string', 'exists:accounts,account_number'];
             } elseif ($type === 'withdrawal') {

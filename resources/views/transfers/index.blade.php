@@ -41,9 +41,54 @@
             </div>
         @endif
 
-        <form action="{{ isset($isTeller) && $isTeller ? route('teller.transfers.store') : route('transfers.store', ['uuid' => request()->route('uuid') ?? auth()->user()->uuid]) }}" method="POST" class="space-y-8" x-data="{ submitting: false, transactionType: '{{ old('transaction_type', 'deposit') }}' }"
+        <form action="{{ isset($isTeller) && $isTeller ? route('teller.transfers.store') : route('transfers.store', ['uuid' => request()->route('uuid') ?? auth()->user()->uuid]) }}" method="POST" class="space-y-8" 
+            x-data="{ 
+                submitting: false, 
+                transactionType: '{{ isset($isTeller) && $isTeller ? old('transaction_type', 'deposit') : 'transfer' }}',
+                analyzing: false,
+                riskResult: null,
+                analyzeRisk() {
+                    const amount = document.getElementById('amount').value;
+                    const source = document.getElementById('source_account').value;
+                    const dest = document.getElementById('destination_account').value;
+                    
+                    if (!amount || !source || !dest) {
+                        alert('Please fill out Source, Destination, and Amount to analyze risk.');
+                        return;
+                    }
+
+                    this.analyzing = true;
+                    this.riskResult = null;
+
+                    fetch('{{ isset($isTeller) && $isTeller ? route('teller.transfers.analyze') : route('transfers.analyze', ['uuid' => request()->route('uuid') ?? auth()->user()->uuid]) }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            amount: amount,
+                            source_account: source,
+                            destination_account: dest
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        this.riskResult = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to analyze risk.');
+                    })
+                    .finally(() => {
+                        this.analyzing = false;
+                    });
+                }
+            }"
             @submit="submitting = true">
             @csrf
+            <input type="hidden" name="idempotency_key" value="{{ Str::uuid() }}">
 
             @if(isset($isTeller) && $isTeller)
                 <div class="mb-8">
@@ -137,7 +182,53 @@
                 @endif
             </div>
 
-            <div class="pt-6 border-t border-ink/10 flex justify-end">
+            <div class="pt-6 border-t border-ink/10 flex flex-col gap-6">
+                <!-- AI Risk Analysis Box -->
+                <div x-show="transactionType === 'transfer'" class="border border-ink/10 p-6 bg-ink text-paper relative overflow-hidden group shadow-lg" style="display: none;">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brass/10 to-transparent pointer-events-none"></div>
+                    
+                    <div class="flex items-center justify-between relative z-10">
+                        <div>
+                            <h3 class="font-display text-lg flex items-center gap-2">
+                                <svg class="w-5 h-5 text-brass" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                AI Risk Analysis
+                            </h3>
+                            <p class="text-paper/60 font-mono text-[11px] uppercase tracking-widest mt-1">Evaluate transaction safety before processing</p>
+                        </div>
+                        <button type="button" @click="analyzeRisk" :disabled="analyzing" class="border border-brass/30 bg-brass/10 hover:bg-brass/20 text-brass px-4 py-2 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2">
+                            <span x-show="!analyzing">Analyze Now</span>
+                            <span x-show="analyzing" style="display: none;">
+                                <svg class="animate-spin h-3 w-3 text-brass" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                Analyzing...
+                            </span>
+                        </button>
+                    </div>
+
+                    <div x-show="riskResult" x-transition.opacity style="display: none;" class="mt-6 pt-6 border-t border-paper/10 relative z-10">
+                        <div class="flex items-start gap-6">
+                            <div class="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-full border-2 bg-ink" 
+                                 :class="{
+                                     'border-ledger-green text-ledger-green shadow-[0_0_15px_rgba(46,139,87,0.3)]': riskResult?.risk_score < 30,
+                                     'border-brass text-brass shadow-[0_0_15px_rgba(205,164,52,0.3)]': riskResult?.risk_score >= 30 && riskResult?.risk_score < 70,
+                                     'border-ledger-rust text-ledger-rust shadow-[0_0_15px_rgba(183,65,14,0.3)]': riskResult?.risk_score >= 70
+                                 }">
+                                <span class="font-display text-2xl" x-text="riskResult?.risk_score"></span>
+                            </div>
+                            <div>
+                                <div class="font-mono text-xs uppercase tracking-widest mb-1"
+                                     :class="{
+                                         'text-ledger-green': riskResult?.recommendation === 'Approve' || riskResult?.recommendation === 'approve',
+                                         'text-brass': riskResult?.recommendation === 'Review' || riskResult?.recommendation === 'review',
+                                         'text-ledger-rust': riskResult?.recommendation === 'Reject' || riskResult?.recommendation === 'reject'
+                                     }"
+                                     x-text="riskResult?.recommendation"></div>
+                                <p class="text-paper/80 text-sm leading-relaxed" x-text="riskResult?.reasoning"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
                 <button type="submit" :disabled="submitting" :class="submitting ? 'opacity-80 cursor-not-allowed' : ''"
                     class="bg-brass hover:bg-brass-soft text-ink font-mono font-medium py-3 px-8 uppercase tracking-widest text-sm transition-colors flex items-center justify-center gap-2 min-w-[240px]">
 

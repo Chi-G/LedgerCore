@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\LedgerEntry;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Support\Facades\Gate;
 
 class StatementController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('viewAny', LedgerEntry::class);
         $user = $request->user();
 
-        if ($user->role === 'teller') {
-            abort(403, 'Unauthorized access.');
-        }
-        
         // Allowed accounts for dropdown
         if (in_array($user->role, ['auditor', 'manager'])) {
             $accounts = Account::all();
@@ -26,12 +26,12 @@ class StatementController extends Controller
         $accountId = $request->query('account');
         $selectedAccount = $accountId ? $accounts->firstWhere('id', $accountId) : $accounts->first();
 
-        if (!$selectedAccount) {
-            return view('statements.index', ['entries' => new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10), 'accounts' => $accounts, 'selectedAccount' => null]);
+        if (! $selectedAccount) {
+            return view('statements.index', ['entries' => new CursorPaginator([], 15), 'accounts' => $accounts, 'selectedAccount' => null]);
         }
 
         // If they requested an account they don't have access to
-        if ($accountId && !$selectedAccount) {
+        if ($accountId && ! $selectedAccount) {
             abort(403, 'Unauthorized access to this account.');
         }
 
@@ -49,28 +49,17 @@ class StatementController extends Controller
             $entriesQuery->where('type', $request->type);
         }
 
-        $entries = $entriesQuery->paginate(10);
-        
+        $entries = $entriesQuery->cursorPaginate(15);
+
         // Preserve query parameters for pagination
         $entries->appends($request->all());
 
         return view('statements.index', compact('entries', 'accounts', 'selectedAccount'));
     }
 
-    public function show(Request $request, string $uuid, \App\Models\LedgerEntry $entry)
+    public function show(Request $request, string $uuid, LedgerEntry $entry)
     {
-        $user = $request->user();
-
-        if ($user->role === 'teller') {
-            abort(403, 'Unauthorized access.');
-        }
-
-        // Verify the entry belongs to an account the user has access to
-        if (!in_array($user->role, ['auditor', 'manager'])) {
-            if (!$user->accounts()->where('accounts.id', $entry->account_id)->exists()) {
-                abort(403, 'Unauthorized access to this statement record.');
-            }
-        }
+        Gate::authorize('view', $entry);
 
         return view('statements.show', compact('entry'));
     }

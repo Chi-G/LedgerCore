@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AccountController extends Controller
 {
@@ -11,17 +12,19 @@ class AccountController extends Controller
     {
         $user = $request->user();
 
+        Gate::authorize('viewAny', Account::class);
+
         if (in_array($user->role, ['teller', 'auditor', 'manager'])) {
 
             $query = Account::with('user');
 
             if ($request->filled('account_number')) {
-                $query->where('account_number', 'like', '%' . $request->account_number . '%');
+                $query->where('account_number', 'like', '%'.$request->account_number.'%');
             }
 
             if ($request->filled('account_name')) {
                 $query->whereHas('user', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->account_name . '%');
+                    $q->where('name', 'like', '%'.$request->account_name.'%');
                 });
             }
 
