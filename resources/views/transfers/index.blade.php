@@ -60,11 +60,12 @@
                     this.analyzing = true;
                     this.riskResult = null;
 
-                    fetch('{{ isset($isTeller) && $isTeller ? route('teller.transfers.analyze') : route('transfers.analyze', ['uuid' => request()->route('uuid') ?? auth()->user()->uuid]) }}', {
+                    fetch('{{ isset($isTeller) && $isTeller ? route('teller.transfers.analyze', [], false) : route('transfers.analyze', ['uuid' => request()->route('uuid') ?? auth()->user()->uuid], false) }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'X-Requested-With': 'XMLHttpRequest',
                             'Accept': 'application/json'
                         },
                         body: JSON.stringify({
@@ -184,18 +185,18 @@
 
             <div class="pt-6 border-t border-ink/10 flex flex-col gap-6">
                 <!-- AI Risk Analysis Box -->
-                <div x-show="transactionType === 'transfer'" class="border border-ink/10 p-6 bg-ink text-paper relative overflow-hidden group shadow-lg" style="display: none;">
+                <div x-show="transactionType === 'transfer'" class="border border-ink/10 p-4 sm:p-6 bg-ink text-paper relative overflow-hidden group shadow-lg" style="display: none;">
                     <div class="absolute inset-0 bg-gradient-to-br from-brass/10 to-transparent pointer-events-none"></div>
                     
-                    <div class="flex items-center justify-between relative z-10">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0 relative z-10">
                         <div>
-                            <h3 class="font-display text-lg flex items-center gap-2">
+                            <h3 class="font-display text-base sm:text-lg flex items-center gap-2">
                                 <svg class="w-5 h-5 text-brass" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                 AI Risk Analysis
                             </h3>
-                            <p class="text-paper/60 font-mono text-[11px] uppercase tracking-widest mt-1">Evaluate transaction safety before processing</p>
+                            <p class="text-paper/60 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest mt-1">Evaluate transaction safety before processing</p>
                         </div>
-                        <button type="button" @click="analyzeRisk" :disabled="analyzing" class="border border-brass/30 bg-brass/10 hover:bg-brass/20 text-brass px-4 py-2 font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2">
+                        <button type="button" @click="analyzeRisk" :disabled="analyzing" class="border border-brass/30 bg-brass/10 hover:bg-brass/20 text-brass px-3 py-2 sm:px-4 sm:py-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-2 w-full sm:w-auto">
                             <span x-show="!analyzing">Analyze Now</span>
                             <span x-show="analyzing" style="display: none;">
                                 <svg class="animate-spin h-3 w-3 text-brass" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
@@ -204,25 +205,25 @@
                         </button>
                     </div>
 
-                    <div x-show="riskResult" x-transition.opacity style="display: none;" class="mt-6 pt-6 border-t border-paper/10 relative z-10">
-                        <div class="flex items-start gap-6">
-                            <div class="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-full border-2 bg-ink" 
+                    <div x-show="riskResult" x-transition.opacity style="display: none;" class="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-paper/10 relative z-10">
+                        <div class="flex items-start gap-4 sm:gap-6">
+                            <div class="flex-shrink-0 flex flex-col items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 bg-ink" 
                                  :class="{
                                      'border-ledger-green text-ledger-green shadow-[0_0_15px_rgba(46,139,87,0.3)]': riskResult?.risk_score < 30,
                                      'border-brass text-brass shadow-[0_0_15px_rgba(205,164,52,0.3)]': riskResult?.risk_score >= 30 && riskResult?.risk_score < 70,
                                      'border-ledger-rust text-ledger-rust shadow-[0_0_15px_rgba(183,65,14,0.3)]': riskResult?.risk_score >= 70
                                  }">
-                                <span class="font-display text-2xl" x-text="riskResult?.risk_score"></span>
+                                <span class="font-display text-xl sm:text-2xl" x-text="riskResult?.risk_score"></span>
                             </div>
                             <div>
-                                <div class="font-mono text-xs uppercase tracking-widest mb-1"
+                                <div class="font-mono text-[10px] sm:text-xs uppercase tracking-widest mb-1"
                                      :class="{
                                          'text-ledger-green': riskResult?.recommendation === 'Approve' || riskResult?.recommendation === 'approve',
                                          'text-brass': riskResult?.recommendation === 'Review' || riskResult?.recommendation === 'review',
                                          'text-ledger-rust': riskResult?.recommendation === 'Reject' || riskResult?.recommendation === 'reject'
                                      }"
                                      x-text="riskResult?.recommendation"></div>
-                                <p class="text-paper/80 text-sm leading-relaxed" x-text="riskResult?.reasoning"></p>
+                                <p class="text-paper/80 text-[11px] sm:text-sm leading-relaxed" x-text="riskResult?.reasoning"></p>
                             </div>
                         </div>
                     </div>
