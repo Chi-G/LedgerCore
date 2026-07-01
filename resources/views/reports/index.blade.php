@@ -43,38 +43,40 @@
             </div>
         </form>
 
-        <table class="w-full text-left border-collapse">
-            <thead>
-                <tr class="border-b border-ink/10">
-                    <th class="py-3 px-4 font-mono text-[10px] text-muted uppercase tracking-[0.16em]">Customer Name</th>
-                    <th class="py-3 px-4 font-mono text-[10px] text-muted uppercase tracking-[0.16em]">Email</th>
-                    <th class="py-3 px-4 font-mono text-[10px] text-muted uppercase tracking-[0.16em] text-right">Transactions</th>
-                    <th class="py-3 px-4 font-mono text-[10px] text-muted uppercase tracking-[0.16em] text-center">Status</th>
-                </tr>
-            </thead>
-            <tbody class="font-mono text-sm">
-                @forelse($dormantCustomers as $customer)
-                    <tr class="border-b border-ink/5 hover:bg-paper/50 transition-colors">
-                        <td class="py-4 px-4 text-ink">{{ $customer->name }}</td>
-                        <td class="py-4 px-4 text-muted">{{ $customer->email }}</td>
-                        <td class="py-4 px-4 text-right tabular-nums">{{ $customer->txn_count }}</td>
-                        <td class="py-4 px-4 text-center">
-                            @if($customer->txn_count == 0)
-                                <span class="bg-ledger-rust/10 text-ledger-rust border border-ledger-rust/20 px-2 py-1 text-xs uppercase tracking-wider rounded-sm">Dormant</span>
-                            @else
-                                <span class="bg-ledger-green/10 text-ledger-green border border-ledger-green/20 px-2 py-1 text-xs uppercase tracking-wider rounded-sm">Active</span>
-                            @endif
-                        </td>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[600px]">
+                <thead>
+                    <tr class="border-b border-ink/10">
+                        <th class="py-3 px-4 font-mono text-[10px] text-muted uppercase tracking-[0.16em]">Customer Name</th>
+                        <th class="py-3 px-4 font-mono text-[10px] text-muted uppercase tracking-[0.16em]">Email</th>
+                        <th class="py-3 px-4 font-mono text-[10px] text-muted uppercase tracking-[0.16em] text-right">Transactions</th>
+                        <th class="py-3 px-4 font-mono text-[10px] text-muted uppercase tracking-[0.16em] text-center">Status</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="py-12 text-center text-muted border-none">
-                            No customers found.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="font-mono text-sm">
+                    @forelse($dormantCustomers as $customer)
+                        <tr class="border-b border-ink/5 hover:bg-paper/50 transition-colors">
+                            <td class="py-4 px-4 text-ink whitespace-nowrap">{{ $customer->name }}</td>
+                            <td class="py-4 px-4 text-muted whitespace-nowrap">{{ $customer->email }}</td>
+                            <td class="py-4 px-4 text-right tabular-nums whitespace-nowrap">{{ $customer->txn_count }}</td>
+                            <td class="py-4 px-4 text-center whitespace-nowrap">
+                                @if($customer->txn_count == 0)
+                                    <span class="bg-ledger-rust/10 text-ledger-rust border border-ledger-rust/20 px-2 py-1 text-xs uppercase tracking-wider rounded-sm">Dormant</span>
+                                @else
+                                    <span class="bg-ledger-green/10 text-ledger-green border border-ledger-green/20 px-2 py-1 text-xs uppercase tracking-wider rounded-sm">Active</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="py-12 text-center text-muted border-none">
+                                No customers found.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
         
         <div class="mt-6">
             {{ $dormantCustomers->links() }}

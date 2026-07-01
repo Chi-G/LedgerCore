@@ -89,6 +89,7 @@ jobs:
             
             # Clear caches
             php artisan optimize:clear
+            php artisan cache:clear
             
             # Note: Do not run 'php artisan optimize' on shared hosting unless you have properly 
             # configured route caching without closures. 'optimize:clear' is safer.
